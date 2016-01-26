@@ -1,0 +1,589 @@
+<html>
+<head>
+  <title>Login</title>
+  <script type="text/javascript" src='jqeury.min.js'></script>
+</head>
+<style type="text/css">
+  
+  body {
+  background: #e9e9e9;
+  color: #666666;
+  font-family: 'Segoe UI',sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('back.jpg');
+  background-size: cover;
+  overflow-X:hidden;
+}
+.container
+{
+  transform:scale(0.8);
+}
+
+
+
+/* Container */
+.container {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  margin: 0 auto 100px;
+}
+.container.active .card:first-child {
+  margin: 0 15px;
+}
+.container.active .card:nth-child(2) {
+  margin: 0 10px;
+}
+.container.active .card.alt {
+  top: 20px;
+  right: 0;
+  width: 100%;
+  min-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  padding: 60px 0 40px;
+  overflow: hidden;
+}
+.container.active .card.alt .toggle {
+  position: absolute;
+  top: 40px;
+  right: -70px;
+  box-shadow: none;
+  -webkit-transform: scale(10);
+  transform: scale(10);
+  -webkit-transition: -webkit-transform .3s ease;
+  transition: -webkit-transform .3s ease;
+  transition: transform .3s ease;
+  transition: transform .3s ease, -webkit-transform .3s ease;
+}
+.container.active .card.alt .toggle:before {
+  content: '';
+}
+.container.active .card.alt .title,
+.container.active .card.alt .input-container,
+.container.active .card.alt .button-container {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+.container.active .card.alt .title {
+  -webkit-transition-delay: .3s;
+          transition-delay: .3s;
+}
+.container.active .card.alt .input-container {
+  -webkit-transition-delay: .4s;
+          transition-delay: .4s;
+}
+.container.active .card.alt .input-container:nth-child(2) {
+  -webkit-transition-delay: .5s;
+          transition-delay: .5s;
+}
+.container.active .card.alt .input-container:nth-child(3) {
+  -webkit-transition-delay: .6s;
+          transition-delay: .6s;
+}
+.container.active .card.alt .button-container {
+  -webkit-transition-delay: .7s;
+          transition-delay: .7s;
+}
+
+/* Card */
+.card {
+  position: relative;
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.7),rgba(255,255,255,1));
+  border-radius: 5px;
+  padding: 60px 0 40px 0;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  /* Title */
+  /* Inputs */
+  /* Button */
+  /* Footer */
+  /* Alt Card */
+}
+.card:first-child {
+  height: 10px;
+  border-radius: 5px 5px 0 0;
+  margin: 0 10px;
+  padding: 0;
+  box-shadow: none;
+}
+.card .title {
+  position: relative;
+  z-index: 1;
+  border-left: 5px solid rgba(0,151,167,1);
+  margin: 0 0 35px;
+  padding: 10px 0 10px 50px;
+  color: rgba(0,151,167,1);
+  font-size: 32px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.card .input-container {
+  position: relative;
+  margin: 0 60px 50px;
+}
+.card .input-container input {
+  outline: none;
+  z-index: 1;
+  position: relative;
+  background: none;
+  width: 100%;
+  height: 60px;
+  border: 0;
+  color: #212121;
+  font-size: 24px;
+  font-weight: 400;
+}
+.card .input-container input:focus ~ label {
+  color: #191919;
+  z-index:+1;
+  -webkit-transform: translate(-12%, -50%) scale(0.75);
+          transform: translate(-12%, -50%) scale(0.75);
+}
+.card .input-container input:focus ~ .bar:before, .card .input-container input:focus ~ .bar:after {
+  width: 50%;
+}
+.card .input-container input:valid ~ label {
+  color: #191919;
+  -webkit-transform: translate(-12%, -50%) scale(0.75);
+          transform: translate(-12%, -50%) scale(0.75);
+}
+.card .input-container label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #757575;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 60px;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+.card .input-container .bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #757575;
+  width: 100%;
+  height: 1px;
+}
+.card .input-container .bar:before, .card .input-container .bar:after {
+  content: '';
+  position: absolute;
+  background: rgba(0,151,167,1);
+  width: 0;
+  height: 2px;
+  -webkit-transition: .2s ease;
+  transition: .2s ease;
+}
+.card .input-container .bar:before {
+  left: 50%;
+}
+.card .input-container .bar:after {
+  right: 50%;
+}
+.card .button-container {
+  margin: 0 60px;
+  text-align: center;
+}
+.card .button-container button {
+  outline: 0;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  background: 0;
+  width: 240px;
+  border: 2px solid rgba(0,151,167,1);
+  padding: 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  overflow: hidden;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+.card .button-container button span {
+  position: relative;
+  z-index: 1;
+  color: rgba(0,151,167,1);
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+.card .button-container button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  background: rgba(0,151,167,1);
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin: -15px 0 0 -15px;
+  opacity: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+.card .button-container button:hover, .card .button-container button:active, .card .button-container button:focus {
+  border-color: rgba(0,151,167,1);
+}
+.card .button-container button:hover span, .card .button-container button:active span, .card .button-container button:focus span {
+  color: rgba(0,151,167,1);
+}
+.card .button-container button:active span, .card .button-container button:focus span {
+  color: #ffffff;
+}
+.card .button-container button:active:before, .card .button-container button:focus:before {
+  opacity: 1;
+  -webkit-transform: scale(10);
+  transform: scale(10);
+}
+.card .footer {
+  margin: 40px 0 0;
+  color: rgba(0,151,167,0.8);
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+}
+.card .footer a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+.card .footer a:hover {
+  color: rgba(0,151,167,1);
+}
+.card.alt {
+  position: absolute;
+  top: 40px;
+  right: -70px;
+  z-index: 10;
+  width: 140px;
+  height: 140px;
+  background: none;
+  border-radius: 100%;
+  box-shadow: none;
+  padding: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  /* Toggle */
+  /* Title */
+  /* Input */
+  /* Button */
+}
+.card.alt .toggle {
+  position: relative;
+  background: rgba(0,151,167,1);
+  width: 140px;
+  height: 140px;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #ffffff;
+  font-size: 58px;
+  line-height: 140px;
+  text-align: center;
+  cursor: pointer;
+  transform:rotateY(180deg);
+}
+/*
+.card.alt .toggle:before {
+  content: '\f040';
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+*/
+.card.alt .title,
+.card.alt .input-container,
+.card.alt .button-container {
+  left: 100px;
+  opacity: 0;
+  visibility: hidden;
+}
+.card.alt .title {
+  position: relative;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.card.alt .title .close {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 60px;
+  display: inline;
+  color: #ffffff;
+  font-size: 58px;
+  font-weight: 400;
+}
+.card.alt .title .close:before {
+  content: '\00d7';
+}
+.card.alt .input-container input {
+  color: #ffffff;
+}
+.card.alt .input-container input:focus ~ label {
+  color: #ffffff;
+}
+.card.alt .input-container input:focus ~ .bar:before, .card.alt .input-container input:focus ~ .bar:after {
+  background: #ffffff;
+}
+.card.alt .input-container input:valid ~ label {
+  color: #ffffff;
+}
+.card.alt .input-container label {
+  color: rgba(255, 255, 255, 0.8);
+}
+.card.alt .input-container .bar {
+  background: rgba(255, 255, 255, 0.8);
+}
+.card.alt .button-container button {
+  width: 100%;
+  background: #ffffff;
+  border-color: #ffffff;
+}
+.card.alt .button-container button span {
+  color: rgba(0,151,167,1);
+}
+.card.alt .button-container button:active {
+  background: rgba(255, 255, 255, 0.9);
+}
+.card.alt .button-container button:active:before, .card.alt .button-container button:focus:before {
+  display: none;
+}
+
+/* Keyframes */
+@-webkit-keyframes buttonFadeInUp {
+  0% {
+    bottom: 30px;
+    opacity: 0;
+  }
+}
+@keyframes buttonFadeInUp {
+  0% {
+    bottom: 30px;
+    opacity: 0;
+  }
+}
+
+/*Main Page*/
+#main
+{
+  display: block;
+  width: 100%;
+  left: 100%;
+  top:0;
+  position: absolute;
+  min-height: 700px;
+  z-index: +1;
+  background: #efefef;
+  transition:left 0.8s ease-out;
+  box-shadow:-5px 0px 10px 0px rgba(0,0,0,0.2);
+}
+#main>#sidebar
+{
+  height: 100%;
+  position: 100%;
+  background:#e5e5ff;
+  float: left;
+  position: absolute;
+  display: inline-block;
+  width: 0px;
+  border-right: #ccc solid 1px;
+  z-index: +1;
+  transition-delay:1s;
+  transition:width 0.5s ease-out;
+}
+#main.active
+{
+  left:0px;
+}
+#main.active>#sidebar
+{
+  width:20%;
+  left: 0;
+}
+#wrapper
+{
+  height: 100%;
+  box-sizing:border-box;
+  width: 80%;
+  position: absolute;
+  left: 20%;
+  display: inline-block;
+  background:#EEf;
+}
+#sidebar>#tags
+{
+  position: absolute;
+  width: 100%;
+  box-sizing:border-box;
+  height:auto;
+  padding: 25px;
+}
+#sidebar>#tags>li
+{
+  position: relative;
+  list-style-type: none;
+  width:100%;
+  height:40px;
+  color:white;
+  border-radius:20px;
+  background:#29B6F6;
+  box-sizing:border-box;
+  padding-left:50px;
+  line-height: 40px;
+  margin-bottom: 5px;
+}
+#sidebar>#tags>li>span
+{
+  content: "";
+  position: absolute;
+  left: 5px;
+  top:5px;
+  font-size: 13px;
+  width:30px;
+  height:30px;
+  background: #81D4FA;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 30px;
+  color: #555;
+  cursor:pointer;
+}
+#sidebar>.input_wrapper
+{
+  position: absolute;
+  bottom:25px;
+  width: 100%;
+  box-sizing:border-box;
+  padding:0px 25px;
+  height: 40px;
+}
+#sidebar>.input_wrapper>input
+{
+  width: 100%;
+  border-radius: 25px;
+  background:white;
+  font-size: normal;
+  padding: 15px;
+  border: none;
+  outline: none;
+}
+</style>
+
+<body>
+<div class="container">
+  <div class="card"></div>
+  <div class="card">
+    <h1 class="title">Login</h1>
+    <form>
+      <div class="input-container">
+        <input type="text" id="Username" required="required"/>
+        <label for="Username">Username</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="Password" required="required"/>
+        <label for="Password">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button><span>Go</span></button>
+      </div>
+      <div class="footer"><a href="#">Forgot your password?</a></div>
+    </form>
+  </div>
+  <div class="card alt">
+    <div class="toggle">&#9998;</div>
+    <h1 class="title">Register
+      <div class="close"></div>
+    </h1>
+    <form>
+      <div class="input-container">
+        <input type="text" id="Name" required="required"/>
+        <label for="Name">Name</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="BITS ID" required="required"/>
+        <label for="BITS ID">BITS ID</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="Password" required="required"/>
+        <label for="Password">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button><span>Next</span></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="main"> 
+  <div id='wrapper'></div>
+  <div id='sidebar'>
+    <div id="tags">
+      <li><span>&#10005;</span>Hello World</li>
+    </div>
+    <div class='input_wrapper'>
+      <input placeholder="Search Preferences"/>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  var container=document.getElementsByClassName('container')[0],
+      close=document.getElementsByClassName('close')[0],
+      toggle=document.getElementsByClassName('toggle')[0],
+      buttons=container.getElementsByTagName('button'),
+      main=document.getElementById('main'),
+      sidebar=document.getElementById('sidebar');
+      prefIn=sidebar.getElementsByTagName('input')[0];
+      tags=document.getElementById('tags');
+  toggle.onclick=function(){
+    container.classList.add('active');
+    toggle.innerHTML="";
+  }
+  close.onclick=function(){
+    container.classList.remove('active');
+    toggle.innerHTML="&#9998;";
+  }
+  sidebar.style.height=window.innerHeight;
+  document.body.onload=function(){window.scrollTo(0,0);}
+  window.onresize=function(){
+    sidebar.style.height=window.innerHeight;
+  }
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].onclick=function(){
+      //check validation before executing here
+      main.classList.add('active');
+    }
+  };
+  prefIn.onkeypress=function(e){
+    if(e.keyCode==13)
+    {
+      var newTag=document.createElement('li');
+       newTag.innerHTML='<span>&#10005;</span>'+this.value;
+       tags.appendChild(newTag);
+    }
+  }
+  $('#tags>li>span').click(function(){
+    console.log('go');
+  });
+</script>
+</html>
