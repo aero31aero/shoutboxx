@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Login</title>
-  <script type="text/javascript" src='jqeury.min.js'></script>
+  <script type="text/javascript" src='jquery.min.js'></script>
 </head>
 <style type="text/css">
   
@@ -14,7 +14,7 @@
   -moz-osx-font-smoothing: grayscale;
   background-image: url('back.jpg');
   background-size: cover;
-  overflow-X:hidden;
+  overflow:hidden;
 }
 .container
 {
@@ -447,6 +447,12 @@
   padding-left:50px;
   line-height: 40px;
   margin-bottom: 5px;
+  -webkit-animation:showUp 0.2s 1 linear;
+}
+@-webkit-keyframes showUp
+{
+0%{margin-top:20px;opacity:0;}
+100%{margin-top:0px;opacity:1;}
 }
 #sidebar>#tags>li>span
 {
@@ -483,6 +489,74 @@
   border: none;
   outline: none;
 }
+#sidebar>h3
+{
+text-align:center;
+margin-bottom:-10px;
+}
+#searchBar
+{
+width:500px;
+height:45px;
+border:1px solid rgba(0,0,0,0.1);
+border-radius:10px;
+font-size:17px;
+color:#222;
+position:relative;
+left:50%;
+margin-left:-250px;
+margin-top:16px;
+font-weight:500;
+padding:10px 25px;
+}
+#post_wrapper
+{
+width:500px;
+margin-left:-250px;
+position:relative;
+left:50%;
+min-height:500px;
+border-radius:20px;
+box-shadow:0px 20px 50px -20px #fff inset;
+}
+::-webkit-scrollbar
+{
+display:none;
+}
+#post_wrapper>.post
+{
+width:500;
+min-height:200px;
+box-shadow:0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+margin:7px 0px;
+list-style-type:none;
+background:#fff;
+position:relative;
+border-radius:10px;
+}
+#scrollable
+{
+height:75%;
+overflow:scroll;
+margin:20px;
+}
+#post_wrapper>.post>.options
+    {
+        left:100%;
+        top:50%;
+        transform:translateY(-50%);
+        padding-left: 10px;
+    }
+#post_wrapper>.post>.options>li
+    {
+        list-style-type: none;
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        background: #aaa;
+        margin-top:10px;
+        box-shadow:0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
 </style>
 
 <body>
@@ -535,8 +609,25 @@
   </div>
 </div>
 <div id="main"> 
-  <div id='wrapper'></div>
+  <div id='wrapper'>
+	<input id='searchbar' placeholder="Search"/>
+	<div id='scrollable'>	
+	<div id='post_wrapper'>
+		<li class='post'>
+        </li>
+		<li class='post'>
+        </li>
+		<li class='post'>
+        </li>
+		<li class='post'>
+        </li>
+		<li class='post'>
+        </li>	
+	</div>
+	</div>	
+  </div>
   <div id='sidebar'>
+	<h3>Filters</h3>
     <div id="tags">
       <li><span>&#10005;</span>Hello World</li>
     </div>
@@ -554,7 +645,8 @@
       main=document.getElementById('main'),
       sidebar=document.getElementById('sidebar');
       prefIn=sidebar.getElementsByTagName('input')[0];
-      tags=document.getElementById('tags');
+tagHolder=document.getElementById('tags');
+      tags=tagHolder.getElementsByTagName('span');
   toggle.onclick=function(){
     container.classList.add('active');
     toggle.innerHTML="";
@@ -574,16 +666,29 @@
       main.classList.add('active');
     }
   };
+	var counter=1;
   prefIn.onkeypress=function(e){
     if(e.keyCode==13)
     {
       var newTag=document.createElement('li');
+	newTag.setAttribute('index',++counter);
        newTag.innerHTML='<span>&#10005;</span>'+this.value;
-       tags.appendChild(newTag);
+       tagHolder.appendChild(newTag);
+	refreshTags();
+	this.value="";
     }
   }
-  $('#tags>li>span').click(function(){
-    console.log('go');
-  });
+  function refreshTags()
+{
+	tags=document.getElementsByTagName('span');
+    for(i=0;i<tags.length;i++)
+    {
+        tags[i].onclick=function(){
+	   this.parentNode.parentNode.removeChild(this.parentNode);
+        }	
+    }
+}
+
+
 </script>
 </html>
