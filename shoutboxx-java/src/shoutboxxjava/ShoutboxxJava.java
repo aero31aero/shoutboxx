@@ -39,6 +39,8 @@ public class ShoutboxxJava {
             for (List<Post> myFeedConnectionPage : pageFeed){            
                 for (Post post : myFeedConnectionPage){
                     String msg=post.getMessage();
+                    System.out.println(msg);
+                    // msg = msg.replace(, msg)
                     query="INSERT INTO posts VALUES(\""+post.getId()+"\",\""+msg+"\");";                    
                     System.out.println(query);
                     int executeUpdate = stmt.executeUpdate(query);
@@ -59,5 +61,6 @@ public class ShoutboxxJava {
     Matcher matcher = pattern.matcher(s);
     String number = matcher.replaceAll("");
     return number;
+    
  }
 }
