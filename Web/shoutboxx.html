@@ -901,12 +901,12 @@ margin:20px;
   }
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].onclick=bringmain;
-    document.getElementsByTagName('form').onsubmit=bringmain;
+  };
+  document.getElementsByTagName('form').onsubmit=bringmain;
     function bringmain(){
       //check validation before executing here
       main.classList.add('active');
     }
-  };
   var counter=1;
   prefIn.onkeypress=function(e){
     if(e.keyCode==13)
