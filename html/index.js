@@ -1,49 +1,67 @@
 var container=document.getElementsByClassName('container')[0],
-      close=document.getElementsByClassName('close')[0],
-      toggle=document.getElementsByClassName('toggle')[0],
-      buttons=container.getElementsByTagName('button'),
-      main=document.getElementById('main'),
-      sidebar=document.getElementById('sidebar');
-      prefIn=sidebar.getElementsByTagName('input')[0];
-      tagHolder=document.getElementById('tags');
-      posts=document.getElementsByClassName('post');
-      refreshTags();
-    for(i=0;i<posts.length;i++)
-        {
-            posts[i].onmouseover=function(){
-                this.classList.add('active');
-            }
-            posts[i].onmouseout=function(){
-                this.classList.remove('active');    
-            }
-        }
-  toggle.onclick=function(){
+close=document.getElementsByClassName('close')[0],
+toggle=document.getElementsByClassName('toggle')[0],
+buttons=container.getElementsByTagName('button'),
+main=document.getElementById('main'),
+sidebar=document.getElementById('sidebar');
+prefIn=sidebar.getElementsByTagName('input')[0];
+tagHolder=document.getElementById('tags');
+posts=document.getElementsByClassName('post');
+refreshTags();
+
+//code for showing and hiding buttons on posts
+for(i=0;i<posts.length;i++)
+{
+    posts[i].onmouseover=function(){
+        this.classList.add('active');
+    }
+    posts[i].onmouseout=function(){
+        this.classList.remove('active');    
+    }
+}
+
+//function for signup dialog box to open
+toggle.onclick=function(){
     container.classList.add('active');
     toggle.innerHTML="";
-  }
-  close.onclick=function(){
+}
+
+//function for signup dialog box to close
+close.onclick=function(){
     container.classList.remove('active');
     toggle.innerHTML="&#9998;";
-  }
-  sidebar.style.height=window.innerHeight;
-  document.body.onload=function(){window.scrollTo(0,0);
-                                  sidebar.style.height=window.innerHeight;
-    document.getElementById('wrapper').style.height=window.innerHeight;
-                                 }
-  window.onresize=function(){
+}
+
+//set sidebar height to window height
+sidebar.style.height=window.innerHeight;
+
+//set the posts wrapper height to window height
+document.body.onload=function(){
+    window.scrollTo(0,0);
+    sidebar.style.height=window.innerHeight;
+    document.getElementById('wrapper').style.height=window.innerHeight; 
+}
+
+//update sidebar and posts wrapper heights on window resize
+window.onresize=function(){
     sidebar.style.height=window.innerHeight;
     document.getElementById('wrapper').style.height=window.innerHeight;
-      
-  }
-  for (var i = 0; i < buttons.length; i++) {
+}
+
+
+for (var i = 0; i < buttons.length; i++) {
     buttons[i].onclick=bringmain;
-  };
-  document.getElementsByTagName('form').onsubmit=bringmain;
+};
+
+//code to launch the main screen
+document.getElementsByTagName('form').onsubmit=bringmain;
     function bringmain(){
-      //check validation before executing here
-      main.classList.add('active');
+    //check validation before executing here
+        main.classList.add('active');
         window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
-    }
+}
+
+
   var counter=1;
   prefIn.onkeypress=function(e){
     if(e.keyCode==13)
