@@ -6,24 +6,26 @@ ini_set('memory_limit', "9999M");
 
  
 try {
-    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbusername, $dbpassword);
+   # $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbusername, $dbpassword);
+    $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
     echo "Connected to $dbname at $dbhost successfully.";
-} catch (PDOException $pe) {
+} catch (Exception $pe) {
     die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
 
 $sql = "CREATE TABLE test (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-message LONGTEXT(4294967295) NOT NULL,
-mid LONGTEXT(4294967295) NOT NULL,
+message LONGTEXT NOT NULL,
+mid LONGTEXT NOT NULL,
 entry_date TIMESTAMP
-)";
-
+);"; 
+echo "Her 1";
 if ($conn->query($sql) === TRUE) {
     echo "Table test created successfully";
 } else {
     echo "Error creating table: " . $conn->error;
 }
+echo "Her 2";
 function fetchUrl($url) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -46,14 +48,16 @@ $numberofpagesdone = 0;
 a:
 	if($numberofpagesdone !== 10){
 $json = fetchUrl($url);
+echo "Her 3";
 $json_a = json_decode($json,TRUE);
+echo "Her 4";
 foreach($json_a['data'] as $shit)
 {
 if(array_key_exists('message', $shit)) {
 
 $messageshit = mysql_escape_string($shit['message']);
 $midshit = $shit['id'];
-
+echo "Her 5";
 $sql = "INSERT INTO test (message, mid)
 VALUES ('$messageshit', '$midshit')";
 
@@ -62,10 +66,10 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-    #echo $shit['message']." name is ".$shit['id'];
+    echo $shit['message']." name is ".$shit['id'];
 }
 }
-
+echo "Her 6";
 $i = 0;
 foreach($json_a['paging'] as $shit2)
 {
@@ -84,7 +88,7 @@ goto a;
 	}
 	else{
 		
-		$conn->close();
+		#$conn->close();
 		
 	}
 ?>
