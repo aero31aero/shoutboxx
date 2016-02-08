@@ -1,0 +1,179 @@
+.:
+total 72
+drwxrwxr-x 5 nischay nischay  4096 Feb  8 06:20 .
+drwxr-xr-x 6 nischay nischay  4096 Feb  8 06:19 ..
+-rw-rw-r-- 1 nischay nischay     0 Feb  8 06:20 filelist.list
+drwxrwxr-x 8 nischay nischay  4096 Feb  8 06:20 .git
+-rw-rw-r-- 1 nischay nischay   428 Feb  8 06:18 .gitignore
+drwxrwxr-x 2 nischay nischay  4096 Feb  8 06:18 html
+-rw-rw-r-- 1 nischay nischay 35141 Feb  8 06:18 LICENSE
+-rw-rw-r-- 1 nischay nischay    57 Feb  8 06:18 README.md
+drwxrwxr-x 4 nischay nischay  4096 Feb  8 06:18 shoutboxx-java
+-rw-rw-r-- 1 nischay nischay   346 Feb  8 06:18 testinginstructions.txt
+-rw-rw-r-- 1 nischay nischay   346 Feb  8 06:18 testinginstructions.txt~
+
+./.git:
+total 56
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 .
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:20 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 branches
+-rw-rw-r-- 1 nischay nischay   13 Feb  8 06:20 COMMIT_EDITMSG
+-rw-rw-r-- 1 nischay nischay  257 Feb  8 06:18 config
+-rw-rw-r-- 1 nischay nischay   73 Feb  8 06:18 description
+-rw-rw-r-- 1 nischay nischay   20 Feb  8 06:18 HEAD
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 hooks
+-rw-rw-r-- 1 nischay nischay 1672 Feb  8 06:18 index
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 info
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 logs
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 objects
+-rw-rw-r-- 1 nischay nischay  172 Feb  8 06:18 packed-refs
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:18 refs
+
+./.git/branches:
+total 8
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+
+./.git/hooks:
+total 48
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+-rwxrwxr-x 1 nischay nischay  478 Feb  8 06:18 applypatch-msg.sample
+-rwxrwxr-x 1 nischay nischay  896 Feb  8 06:18 commit-msg.sample
+-rwxrwxr-x 1 nischay nischay  189 Feb  8 06:18 post-update.sample
+-rwxrwxr-x 1 nischay nischay  424 Feb  8 06:18 pre-applypatch.sample
+-rwxrwxr-x 1 nischay nischay 1642 Feb  8 06:18 pre-commit.sample
+-rwxrwxr-x 1 nischay nischay 1239 Feb  8 06:18 prepare-commit-msg.sample
+-rwxrwxr-x 1 nischay nischay 1348 Feb  8 06:18 pre-push.sample
+-rwxrwxr-x 1 nischay nischay 4898 Feb  8 06:18 pre-rebase.sample
+-rwxrwxr-x 1 nischay nischay 3611 Feb  8 06:18 update.sample
+
+./.git/info:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+-rw-rw-r-- 1 nischay nischay  240 Feb  8 06:18 exclude
+
+./.git/logs:
+total 16
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+-rw-rw-r-- 1 nischay nischay  193 Feb  8 06:18 HEAD
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 refs
+
+./.git/logs/refs:
+total 16
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 heads
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 remotes
+
+./.git/logs/refs/heads:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay  193 Feb  8 06:18 web
+
+./.git/logs/refs/remotes:
+total 12
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 origin
+
+./.git/logs/refs/remotes/origin:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay  193 Feb  8 06:18 HEAD
+
+./.git/objects:
+total 16
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 info
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 pack
+
+./.git/objects/info:
+total 8
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 ..
+
+./.git/objects/pack:
+total 236
+drwxrwxr-x 2 nischay nischay   4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay   4096 Feb  8 06:18 ..
+-r--r--r-- 1 nischay nischay   3368 Feb  8 06:18 pack-75bb1a02d2b50de1e7dd7af588631c8ffe1310c7.idx
+-r--r--r-- 1 nischay nischay 227216 Feb  8 06:20 pack-75bb1a02d2b50de1e7dd7af588631c8ffe1310c7.pack
+
+./.git/refs:
+total 20
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 8 nischay nischay 4096 Feb  8 06:20 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 heads
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 remotes
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 tags
+
+./.git/refs/heads:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay   41 Feb  8 06:18 web
+
+./.git/refs/remotes:
+total 12
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:18 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 origin
+
+./.git/refs/remotes/origin:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay   29 Feb  8 06:18 HEAD
+
+./.git/refs/tags:
+total 8
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:18 ..
+
+./html:
+total 304
+drwxrwxr-x 2 nischay nischay   4096 Feb  8 06:18 .
+drwxrwxr-x 5 nischay nischay   4096 Feb  8 06:20 ..
+-rwxrwxr-x 1 nischay nischay 128269 Feb  8 06:18 back.jpg
+-rw-rw-r-- 1 nischay nischay  15760 Feb  8 06:18 index.css
+-rw-rw-r-- 1 nischay nischay   3508 Feb  8 06:18 index.js
+-rwxrwxr-x 1 nischay nischay  95999 Feb  8 06:18 jquery.min.js
+-rw-rw-r-- 1 nischay nischay  43660 Feb  8 06:18 material-icons.woff2
+-rwxrwxr-x 1 nischay nischay   4653 Feb  8 06:18 shoutboxx.html
+
+./shoutboxx-java:
+total 24
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 5 nischay nischay 4096 Feb  8 06:20 ..
+-rw-rw-r-- 1 nischay nischay 3554 Feb  8 06:18 build.xml
+-rw-rw-r-- 1 nischay nischay   82 Feb  8 06:18 manifest.mf
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 nbproject
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 src
+
+./shoutboxx-java/nbproject:
+total 100
+drwxrwxr-x 2 nischay nischay  4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay  4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay 77937 Feb  8 06:18 build-impl.xml
+-rw-rw-r-- 1 nischay nischay   467 Feb  8 06:18 genfiles.properties
+-rw-rw-r-- 1 nischay nischay  2899 Feb  8 06:18 project.properties
+-rw-rw-r-- 1 nischay nischay   507 Feb  8 06:18 project.xml
+
+./shoutboxx-java/src:
+total 12
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 4 nischay nischay 4096 Feb  8 06:18 ..
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 shoutboxxjava
+
+./shoutboxx-java/src/shoutboxxjava:
+total 12
+drwxrwxr-x 2 nischay nischay 4096 Feb  8 06:18 .
+drwxrwxr-x 3 nischay nischay 4096 Feb  8 06:18 ..
+-rw-rw-r-- 1 nischay nischay 2519 Feb  8 06:18 ShoutboxxJava.java
+Hello World
