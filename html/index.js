@@ -9,6 +9,12 @@ tagHolder=document.getElementById('tags');
 posts=document.getElementsByClassName('post');
 refreshTags();
 
+//getXMLHTTPrequest
+function getRequest(){
+    var request= new XMLHttpRequest();
+    return request;
+}
+
 //code for showing and hiding buttons on posts
 for(i=0;i<posts.length;i++)
 {
@@ -29,7 +35,8 @@ toggle.onclick=function(){
 //function for signup dialog box to close
 close.onclick=function(){
     container.classList.remove('active');
-    toggle.innerHTML="&#9998;";
+    //toggle.innerHTML="&#9998;";
+    toggle.innerHTML="New";
 }
 
 //set sidebar height to window height
@@ -48,36 +55,67 @@ window.onresize=function(){
     document.getElementById('wrapper').style.height=window.innerHeight;
 }
 
+var idclicked=null;
+//for (var i = 0; i < buttons.length; i++) {
+//    idclicked=buttons[i].getAttribute('id');
+//    //console.log(buttons[i].getElementById('regbutt').toString);
+//    
+//    buttons[i].onclick=bringmain;
+//    
+//};
+buttons[1].onclick=register;
 
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].onclick=bringmain;
-};
+function register(){
+    var request= getRequest();
+    var username=document.getElementById('name').value;
+    var bitsid=document.getElementById('bitsid').value;
+    var password=document.getElementById('password').value;
+    var params="backend/register.php?username=" + username +"&password=" + password + "&bitsid=" + bitsid ;
+    request.open("POST",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();
+    bringmain();
+}
 
-//code to launch the main screen
-document.getElementsByTagName('form').onsubmit=bringmain;
     function bringmain(){
-    //check validation before executing here
+        //check validation before executing here
+        //alert("moreshit");
+        //if(main.getAttribute('id')='regbutt'){
+        //    alert('shit happened');
+        //}
         main.classList.add('active');
         window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
+            
 }
 
 
+//code to add new tags
   var counter=1;
   prefIn.onkeypress=function(e){
     if(e.keyCode==13)
     {
-      var newTag=document.createElement('li');
-  newTag.setAttribute('index',++counter);
-       newTag.innerHTML='<span>&#10005;</span>'+this.value;
-       tagHolder.appendChild(newTag);
-  refreshTags();
-  this.value="";
+        var request= getRequest();
+        var params="backend/tags.php?userid=1&tag=" + this.value ;
+        request.open("POST",params,true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.setRequestHeader("Content-length",params.length);
+        request.setRequestHeader("Connection","close");
+        request.send();       
+        var newTag=document.createElement('li');
+        newTag.setAttribute('index',++counter);
+        newTag.innerHTML='<span>&#10005;</span>'+this.value;
+        tagHolder.appendChild(newTag);
+        refreshTags();
+        this.value="";
     }
   }
   var bookmarks=document.getElementsByClassName('bookmarks');
   for(i=0;i<bookmarks.length;i++)
       {
           bookmarks[i].onclick=function(){
+              console.log("Clicked here: " + i);
               this.classList.toggle('active');
               if(this.classList.contains('active'))
                   this.getElementsByTagName('i')[0].innerHTML='bookmark';
@@ -90,8 +128,11 @@ document.getElementsByTagName('form').onsubmit=bringmain;
   tags=tagHolder.getElementsByTagName('span');
     for(i=0;i<tags.length;i++)
     {
+        
+//code to remove tags       
         tags[i].onclick=function(){
-     this.parentNode.parentNode.removeChild(this.parentNode);
+            console.log("This is removed: " + this.parentNode);
+            this.parentNode.parentNode.removeChild(this.parentNode);
         } 
     }
 }

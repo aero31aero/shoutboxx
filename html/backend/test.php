@@ -42,7 +42,7 @@ function fetchUrl($url) {
 
 
 
-$url = "https://graph.facebook.com/$groupid/feed/?access_token=$accesstoken";
+$url = "https://graph.facebook.com/$groupid/feed/?access_token=$accesstoken&fields=id,from,created_time,message,message_tags,type,story,status_type";
 $numberofpages = 10;
 $numberofpagesdone = 0;
 a:
@@ -53,21 +53,20 @@ $json_a = json_decode($json,TRUE);
 echo "Her 4";
 foreach($json_a['data'] as $shit)
 {
-if(array_key_exists('message', $shit)) {
+    if(array_key_exists('message', $shit)) {
+        $messageshit = mysql_escape_string($shit['message']);
+        $midshit = $shit['id'];
+        echo "Her 5";
+        $sql = "INSERT INTO test (message, mid)
+        VALUES ('$messageshit', '$midshit')";
 
-$messageshit = mysql_escape_string($shit['message']);
-$midshit = $shit['id'];
-echo "Her 5";
-$sql = "INSERT INTO test (message, mid)
-VALUES ('$messageshit', '$midshit')";
-
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-    echo $shit['message']." name is ".$shit['id'];
-}
+        if ($conn->query($sql) === TRUE) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        echo $shit['message']." name is ".$shit['id'];
+    }
 }
 echo "Her 6";
 $i = 0;
@@ -75,7 +74,7 @@ foreach($json_a['paging'] as $shit2)
 {
 	if($i == 1) {
 
-    $url = $shit2;
+    Z$url = $shit2;
 		$numberofpagesdone+=1;
 	}
 	else{
