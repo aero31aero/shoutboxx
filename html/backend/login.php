@@ -11,12 +11,6 @@ try {
 
 $username=mysql_escape_string($_GET['username']);
 $password=mysql_escape_string($_GET['password']);
-$bitsid=mysql_escape_string($_GET['bitsid']);
-
-
-
-$sql = "INSERT INTO users (username,password,bitsid) 
-    VALUES ( '$username' , '$password', '$bitsid' );";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";

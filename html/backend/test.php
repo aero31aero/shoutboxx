@@ -13,19 +13,7 @@ try {
     die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
 
-$sql = "CREATE TABLE test (
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-message LONGTEXT NOT NULL,
-mid LONGTEXT NOT NULL,
-entry_date TIMESTAMP
-);"; 
-echo "Her 1";
-if ($conn->query($sql) === TRUE) {
-    echo "Table test created successfully";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
-echo "Her 2";
+
 function fetchUrl($url) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -53,12 +41,28 @@ $json_a = json_decode($json,TRUE);
 echo "Her 4";
 foreach($json_a['data'] as $shit)
 {
-    if(array_key_exists('message', $shit)) {
-        $messageshit = mysql_escape_string($shit['message']);
+    if(array_key_exists('message', $shit) || array_key_exists('story',$shit)) {
+        if(array_key_exists('message', $shit)){
+            $messageshit = mysql_escape_string($shit['message']);
+            $ismessage = true;
+        }
+        else if(array_key_exists('story', $shit)){
+            $messageshit = mysql_escape_string($shit['story']);
+            $ismessage = false;
+        }
         $midshit = $shit['id'];
+        $typeshit = $shit['type'];
+        $createdtime = $shit['created_time'];
+        $json_b = json_decode($shit,TRUE);
+        $creatorname='';
+        $creatorid='';
+            $creatorname = $shit['from']['name'];
+            $creatorid = $shit['from']['id'];
+            echo "\n SOMETHING SHIT WILL FOLLOW: " . $creatorname . $creatorid . "\n\n\n";
+        
         echo "Her 5";
-        $sql = "INSERT INTO test (message, mid)
-        VALUES ('$messageshit', '$midshit')";
+        $sql = "INSERT INTO posts (message, mid,created_time,creator,creatorid,typeofpost,ismessage)
+        VALUES ('$messageshit', '$midshit', '$createdtime' ,'$creatorname','$creatorid','$typeshit','$ismessage')";
 
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
@@ -74,7 +78,7 @@ foreach($json_a['paging'] as $shit2)
 {
 	if($i == 1) {
 
-    Z$url = $shit2;
+    $url = $shit2;
 		$numberofpagesdone+=1;
 	}
 	else{

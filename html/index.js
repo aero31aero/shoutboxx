@@ -64,6 +64,7 @@ var idclicked=null;
 //    
 //};
 buttons[1].onclick=register;
+buttons[0].onclick=login;
 
 function register(){
     var request= getRequest();
@@ -71,6 +72,19 @@ function register(){
     var bitsid=document.getElementById('bitsid').value;
     var password=document.getElementById('password').value;
     var params="backend/register.php?username=" + username +"&password=" + password + "&bitsid=" + bitsid ;
+    request.open("POST",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();
+    bringmain();
+}
+
+function login(){
+    var request= getRequest();
+    var username=document.getElementById('Username').value;    
+    var password=document.getElementById('Password').value;
+    var params="backend/login.php?username=" + username +"&password=" + password;
     request.open("POST",params,true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.setRequestHeader("Content-length",params.length);
