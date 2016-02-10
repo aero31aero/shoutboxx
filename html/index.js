@@ -8,6 +8,7 @@ prefIn=sidebar.getElementsByTagName('input')[0];
 tagHolder=document.getElementById('tags');
 posts=document.getElementsByClassName('post');
 refreshTags();
+var curuserid=0;
 
 //getXMLHTTPrequest
 function getRequest(){
@@ -16,13 +17,19 @@ function getRequest(){
 }
 
 //code for showing and hiding buttons on posts
-for(i=0;i<posts.length;i++)
-{
-    posts[i].onmouseover=function(){
-        this.classList.add('active');
-    }
-    posts[i].onmouseout=function(){
-        this.classList.remove('active');    
+function onPostLoad(){
+    console.log("FUNCTION CALLED");
+    posts=document.getElementsByClassName('post');
+    console.log(posts.length);
+    for(i=0;i<posts.length;i++)
+    {
+        posts[i].onmouseover=function(){
+            this.classList.add('active');
+            console.log("MOUSE IS HERE");
+        }
+        posts[i].onmouseout=function(){
+            this.classList.remove('active');    
+        }
     }
 }
 
@@ -77,20 +84,83 @@ function register(){
     request.setRequestHeader("Content-length",params.length);
     request.setRequestHeader("Connection","close");
     request.send();
-    bringmain();
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    curuserid=request.responseText;
+                    loadposts();
+                    bringmain();                    
+                }
+            }
+        };    
 }
 
+
 function login(){
-    var request= getRequest();
+    var request= getRequest();  
     var username=document.getElementById('Username').value;    
     var password=document.getElementById('Password').value;
-    var params="backend/login.php?username=" + username +"&password=" + password;
-    request.open("POST",params,true);
+    var params="backend/login.php?username=" + username + "&password=" + password;   
+    request.open("GET",params,true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.setRequestHeader("Content-length",params.length);
     request.setRequestHeader("Connection","close");
-    request.send();
-    bringmain();
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    curuserid=request.responseText;
+                    loadtags();
+                    loadposts();
+                    bringmain();                    
+                }
+            }
+        };
+}
+
+function loadtags(){
+    var request= getRequest();
+    
+    var params="backend/loadtags.php?userid=" + curuserid;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("tags").innerHTML=document.getElementById("tags").innerHTML + request.responseText;
+                    console.log(request.responseText);
+                    refreshTags();
+                    //appendChild(request.responseText);
+                                        
+                }
+            }
+        };
+}
+
+function loadposts(){
+    var request= getRequest();
+    
+    var params="backend/loadposts.php";
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("post_wrapper").innerHTML=document.getElementById("post_wrapper").innerHTML + request.responseText;
+                    console.log(request.responseText);
+                    //appendChild(request.responseText);
+                                        
+                }
+            }
+        };
+    onPostLoad();
+    console.log(posts.length);
 }
 
     function bringmain(){
@@ -111,7 +181,7 @@ function login(){
     if(e.keyCode==13)
     {
         var request= getRequest();
-        var params="backend/tags.php?userid=1&tag=" + this.value ;
+        var params="backend/addtag.php?userid="+curuserid+"&tag=" + this.value ;
         request.open("POST",params,true);
         request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         request.setRequestHeader("Content-length",params.length);
@@ -165,3 +235,4 @@ document.getElementById('open_composer').onmouseup=function(){
 document.getElementById('publish_comp').onmouseup=function(){
   //execute publishing script here 
 }
+// session management

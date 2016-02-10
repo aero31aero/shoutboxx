@@ -1,28 +1,28 @@
 <?php
-session_start();
+//session_start();
 require_once 'configuration.php';
-
+echo "fuck you up"; 
 try {   
     $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
-    
+    echo "Connected to $dbname at $dbhost successfully.";
 } catch (Exception $pe) {
     die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
-
+//echo "fuck you";
 $username=mysql_escape_string($_GET['username']);
 $password=mysql_escape_string($_GET['password']);
 
 $sql = "SELECT * FROM users WHERE username='$username' AND password='$password';";
-
-$result =$conn->query($sql);
-
+echo "fuck you 1";
+$result =$conn->query($sql)or die(echo 'I died');
+echo "fuck you 2";
 $num_row=1;
-$user_row = mysqli_fetch_array($result);
-$num_row = mysqli_num_rows($result);
-
+//$num_row = mysql_num_rows($result);
+echo "fuck you 3";
+echo "Shit";
 if( $num_row >=1 ) { 
-    $_SESSION['userid']=$user_row['userid'];
-    echo $user_row['userid'];
+   // $_SESSION['user_name']=$username;
+    echo "success";
 }
 else{
    echo "fail";

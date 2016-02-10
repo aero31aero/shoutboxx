@@ -762,3 +762,7 @@ margin:20px;
   width: 100%;
   background:rgba(200,200,200,0.4);
 }
+
+.postcontent{
+    padding: 20px;
+}

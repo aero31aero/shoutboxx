@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 require_once 'configuration.php';
 
 try {   
@@ -9,20 +9,22 @@ try {
     die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
 
-$username=mysql_escape_string($_GET['username']);
-$password=mysql_escape_string($_GET['password']);
+$userid=mysql_escape_string($_GET['userid']);
 
-$sql = "SELECT * FROM users WHERE username='$username' AND password='$password';";
+$sql = "SELECT * FROM tags WHERE userid='$userid';";
 
 $result =$conn->query($sql);
 
 $num_row=1;
-$user_row = mysqli_fetch_array($result);
 $num_row = mysqli_num_rows($result);
 
 if( $num_row >=1 ) { 
-    $_SESSION['userid']=$user_row['userid'];
-    echo $user_row['userid'];
+    //$_SESSION['user_name']=$username;
+    
+    while($tag_row = mysqli_fetch_array($result)) {
+        echo "<li><span>&#10005;</span>" . $tag_row['tag'] . "</li>";
+    }
+    
 }
 else{
    echo "fail";
