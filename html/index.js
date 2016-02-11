@@ -6,7 +6,6 @@ main=document.getElementById('main'),
 sidebar=document.getElementById('sidebar');
 prefIn=sidebar.getElementsByTagName('input')[0];
 tagHolder=document.getElementById('tags');
-posts=document.getElementsByClassName('post');
 refreshTags();
 var curuserid=0;
 
@@ -18,14 +17,15 @@ function getRequest(){
 
 //code for showing and hiding buttons on posts
 function onPostLoad(){
-    console.log("FUNCTION CALLED");
+    
     posts=document.getElementsByClassName('post');
-    console.log(posts.length);
+    
     for(i=0;i<posts.length;i++)
     {
+        
         posts[i].onmouseover=function(){
             this.classList.add('active');
-            console.log("MOUSE IS HERE");
+            
         }
         posts[i].onmouseout=function(){
             this.classList.remove('active');    
@@ -87,9 +87,7 @@ function register(){
     request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
-                    curuserid=request.responseText;
-                    loadposts();
-                    bringmain();                    
+                    
                 }
             }
         };    
@@ -111,8 +109,9 @@ function login(){
                 if(request.responseText!="fail"){
                     curuserid=request.responseText;
                     loadtags();
-                    loadposts();
+                    
                     bringmain();                    
+                    loadposts();
                 }
             }
         };
@@ -130,8 +129,8 @@ function loadtags(){
     request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
-                    document.getElementById("tags").innerHTML=document.getElementById("tags").innerHTML + request.responseText;
-                    console.log(request.responseText);
+                    document.getElementById("tags").innerHTML=request.responseText;
+                    //console.log(request.responseText);
                     refreshTags();
                     //appendChild(request.responseText);
                                         
@@ -143,7 +142,7 @@ function loadtags(){
 function loadposts(){
     var request= getRequest();
     
-    var params="backend/loadposts.php";
+    var params="backend/loadposts.php?userid=" + curuserid;
     request.open("GET",params,true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.setRequestHeader("Content-length",params.length);
@@ -152,25 +151,24 @@ function loadposts(){
     request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
-                    document.getElementById("post_wrapper").innerHTML=document.getElementById("post_wrapper").innerHTML + request.responseText;
-                    console.log(request.responseText);
+                    document.getElementById("post_wrapper").innerHTML=request.responseText;
+                    onPostLoad();
                     //appendChild(request.responseText);
                                         
                 }
             }
         };
-    onPostLoad();
-    console.log(posts.length);
+    
 }
 
-    function bringmain(){
-        //check validation before executing here
-        //alert("moreshit");
-        //if(main.getAttribute('id')='regbutt'){
-        //    alert('shit happened');
-        //}
-        main.classList.add('active');
-        window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
+function bringmain(){
+    //check validation before executing here
+    //alert("moreshit");
+    //if(main.getAttribute('id')='regbutt'){
+    //    alert('shit happened');
+    //}
+    main.classList.add('active');
+    window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
             
 }
 
@@ -182,19 +180,32 @@ function loadposts(){
     {
         var request= getRequest();
         var params="backend/addtag.php?userid="+curuserid+"&tag=" + this.value ;
+        var valueoftag=this.value;
+        this.value="";
+        //alert(valueoftag);
         request.open("POST",params,true);
         request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         request.setRequestHeader("Content-length",params.length);
         request.setRequestHeader("Connection","close");
-        request.send();       
-        var newTag=document.createElement('li');
-        newTag.setAttribute('index',++counter);
-        newTag.innerHTML='<span>&#10005;</span>'+this.value;
-        tagHolder.appendChild(newTag);
-        refreshTags();
-        this.value="";
+        request.send();
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){                    
+                    console.log(request.responseText+" HELLO");
+                    loadtags();
+                    loadposts();                    
+                }
+            }
+        };
+//        var newTag=document.createElement('li');
+//        newTag.setAttribute('index',++counter);
+//        tagHolder.appendChild(newTag);
+//        newTag.innerHTML='<span>&#10005;</span>'+this.value;
+//        refreshTags();
+//        this.value="";                                        
     }
   }
+  
   var bookmarks=document.getElementsByClassName('bookmarks');
   for(i=0;i<bookmarks.length;i++)
       {
@@ -207,19 +218,36 @@ function loadposts(){
                   this.getElementsByTagName('i')[0].innerHTML='bookmark_border';
           }
       }
-  function refreshTags()
-{
+function refreshTags(){
   tags=tagHolder.getElementsByTagName('span');
     for(i=0;i<tags.length;i++)
     {
         
 //code to remove tags       
         tags[i].onclick=function(){
-            console.log("This is removed: " + this.parentNode);
+            
+            console.log("This is removed: " + this.parentElement.getAttribute('tagid'));
+            var request= getRequest();
+            var params="backend/removetag.php?tagid=" + this.parentElement.getAttribute('tagid');
+            request.open("GET",params,true);
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.setRequestHeader("Content-length",params.length);
+            request.setRequestHeader("Connection","close");
+            request.send();   
+            request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) {                
+                        if(request.responseText!="fail"){
+                            console.log(request.responseText);
+                            //appendChild(request.responseText);
+                            loadposts();
+                        }
+                    }
+                };
             this.parentNode.parentNode.removeChild(this.parentNode);
         } 
     }
 }
+
 document.getElementById('close_composer').onclick=function(){
   document.getElementById('composer').classList.remove('active');
   var button=document.getElementById('compose_button');

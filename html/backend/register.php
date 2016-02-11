@@ -46,4 +46,5 @@ else{
    
 		
 $conn->close();
-?>
+?>document.getElementById("post_wrapper").innerHTML=document.getElementById("post_wrapper").innerHTML + request.responseText;tagholderHtagHolderrefreshTags();
+                    this.value="";

@@ -22,7 +22,7 @@ if( $num_row >=1 ) {
     //$_SESSION['user_name']=$username;
     
     while($tag_row = mysqli_fetch_array($result)) {
-        echo "<li><span>&#10005;</span>" . $tag_row['tag'] . "</li>";
+        echo "<li tagid='" . $tag_row['tagid'] . "'><span>&#10005;</span>" . $tag_row['tag'] . "</li>";
     }
     
 }

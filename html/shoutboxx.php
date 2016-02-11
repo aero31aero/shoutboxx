@@ -1,10 +1,12 @@
 
-<html> <head>
-  <title>Shoutboxx Crawler</title>
 
+<html>
+<head>
+  <title>Shoutboxx Crawler</title>
+  
 </head>
 <link rel="stylesheet" type="text/css" href="index.css">
-
+<script> </script>
 <body>
 <div class="container">
   <div class="card"></div>
@@ -59,59 +61,7 @@
   <div id='search_wrapper'><input id='searchbar' placeholder="Search"/></div>
   <div id='scrollable'> 
   <div id='post_wrapper'>
-          <li class='post'>
-            <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-            </div>  
-        </li>
-          <li class='post'>
-        <div class='options'>
-            <span><i class="material-icons">reply_all</i></span>
-            <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-        </div>
-        </li>
-          <li class='post'>
-              <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-              </div>
-              <div class='postcontent'>
-                <h3> Hello World! </h3>
-                    <p>this is the text of the post and if I keep on adding stuff to it, I am assuming that it will break and not tile properly. And now I guess that it rendered as it should have.</p>
-              </div>
-            
-        </li>
-          <li class='post'>
-        <div class='options'>
-            <span><i class="material-icons">reply_all</i></span>
-            <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-        </div>
-        </li>
-          <li class='post'>
-            <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-            </div>
-</li>
-          <li class='post'>
-            <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-            </div>
-</li>
-          <li class='post'>
-            <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-            </div>
-            </li>
-          <li class='post'>
-            <div class='options'>
-                <span><i class="material-icons">reply_all</i></span>
-                <span class='bookmarks'><i class="material-icons">bookmark_border</i></span>
-            </div>
-</li>
+          
   </div>
   </div>
   <div id='compose'>
@@ -128,7 +78,6 @@
   <div id='sidebar'>
   <h3>Filters</h3>
     <div id="tags">
-      <li><span>&#10005;</span>Hello World</li>
     </div>
     <div class='input_wrapper'>
       <input placeholder="Search Preferences"/>
@@ -137,7 +86,8 @@
 </div>
 </body>
     
-
+<script type="text/javascript" src="jquery.min.js"> 
+</script>
 <script type="text/javascript" src="index.js"> 
 </script>
     <script><?php session_start(); 
