@@ -41,6 +41,7 @@ while($numberofpagesdone != $numberofpages){
     {
         if(array_key_exists('message', $shit) || array_key_exists('story',$shit)) {
             if(array_key_exists('message', $shit)){
+                $shit['message']=str_replace("\n" , "<br>" , $shit['message'] );
                 $messageshit = mysql_escape_string($shit['message']);
                 $ismessage = true;
             }
