@@ -43,7 +43,7 @@ toggle.onclick=function(){
 close.onclick=function(){
     container.classList.remove('active');
     //toggle.innerHTML="&#9998;";
-    toggle.innerHTML="New";
+    toggle.innerHTML="NEW";
 }
 
 //set sidebar height to window height
@@ -87,7 +87,9 @@ function register(){
     request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
-                    
+                    container.classList.remove('active');
+                    //toggle.innerHTML="&#9998;";
+                    toggle.innerHTML="NEW";
                 }
             }
         };    
@@ -108,15 +110,31 @@ function login(){
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
                     curuserid=request.responseText;
+                    //setusercookie(request.responseText);
                     loadtags();
-                    
                     bringmain();                    
                     loadposts();
+                    
                 }
-            }
+            } 
         };
 }
+/*function setusercookie(var userid){
+    document.cookie="userid=" + userid;
+}
+function killusercookie(){
+    document.cookie="userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    location.reload;
+}
+    if (document.cookie.indexOf("userid") >= 0) {
 
+        alert("Welcome");
+        bringman();
+    }
+    else {
+
+    }*/
+    
 function loadtags(){
     var request= getRequest();
     
@@ -153,6 +171,7 @@ function loadposts(){
                 if(request.responseText!="fail"){
                     document.getElementById("post_wrapper").innerHTML=request.responseText;
                     onPostLoad();
+                    popUps();
                     //appendChild(request.responseText);
                                         
                 }
@@ -160,6 +179,50 @@ function loadposts(){
         };
     
 }
+var $popped=null;
+var images=document.getElementsByClassName('image-link');
+/*for(i=0;i<images.length;i++)
+    {
+        images[i].onclick=function(){
+            zoomed=document.createElement('div');
+            zoomed.backgroundImage='url('+this.src+')';
+            zoomed.classList.add('popUp');
+            zoomed.style.left=this.clientLeft;
+            zoomed.style.top=this.clientTop;
+            zoomed.style.height=this.clientHeight;
+            zoomed.style.width=this.clientW;
+        }
+    }*/
+
+function popUps(){
+    $('.image-link>img').click(function(){
+    $popped=$(this);
+    $zoomed=$(this).clone();
+    $zoomed.addClass('popUp');
+    $zoomed.removeClass('image-link');
+    $(this).css({opacity:0});
+    $zoomed.css({
+        top:$(this).offset().top,
+        left:$(this).offset().left,
+        height:$(this).height(),
+        width:$(this).width()
+    });
+        $('body').append($zoomed);
+        h=window.innerHeight-100;
+        $zoomed.css({height:h+'px',width:(h/($(this).height()/$(this).width()))+'px'});
+        $zoomed.addClass('final');
+        $('#main').addClass('inactive');
+        $('#closePop').show(100);
+        $('#overlay').css({display:'block'});
+    });
+};
+$('#closePop').click(function(){
+    $('.popUp').remove();
+    $('#main').removeClass('inactive');
+    $popped.css({opacity:1});
+    $('#overlay').css({display:'none'});
+    $('#closePop').hide();
+});
 
 function bringmain(){
     //check validation before executing here
@@ -255,6 +318,7 @@ document.getElementById('close_composer').onclick=function(){
   document.getElementById('open_composer').style.display='block';
 
 }
+
 document.getElementById('open_composer').onmouseup=function(){
   document.getElementById('composer').classList.add('active');
   this.style.display='none';
@@ -263,4 +327,25 @@ document.getElementById('open_composer').onmouseup=function(){
 document.getElementById('publish_comp').onmouseup=function(){
   //execute publishing script here 
 }
+
+function logout(){
+    console.log("sdf");
+    var request= getRequest();
+    
+    var params="backend/logout.php";
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText="Done"){
+                   //alert("Logged out");
+                    location.reload();
+                }
+            }
+    }
+}
+
 // session management

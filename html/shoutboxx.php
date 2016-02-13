@@ -1,13 +1,17 @@
-
-
 <html>
 <head>
   <title>Shoutboxx Crawler</title>
   
 </head>
 <link rel="stylesheet" type="text/css" href="index.css">
-<script> </script>
+        
+
 <body>
+
+
+<!--    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="magnific-popup/jquery.magnific-popup.js"></script>-->
 <div class="container">
   <div class="card"></div>
   <div class="card">
@@ -24,13 +28,13 @@
         <div class="bar"></div>
       </div>
       <div class="button-container">
-        <button><span>Go</span></button>
+        <button><span>Log In</span></button>
       </div>
       <div class="footer"><a href="#">Forgot your password?</a></div>
     
   </div>
   <div class="card alt">
-    <div class="toggle">New</div>
+    <div class="toggle">NEW</div>
     <h1 class="title">Register
       <div class="close"></div>
     </h1>
@@ -58,10 +62,19 @@
 </div>
 <div id="main"> 
   <div id='wrapper'>
-  <div id='search_wrapper'><input id='searchbar' placeholder="Search"/></div>
+  <!-- popup -->
+  
+  <div id='search_wrapper'>
+      <input id='searchbar' placeholder="Search"/>
+      <span onclick="logout()" id='logout'>Logout</span>
+    </div>
+  <div id="popfil" class= "cover">
   <div id='scrollable'> 
+  <div id="popfil" class= "cover">
   <div id='post_wrapper'>
           
+  </div>
+  </div>
   </div>
   </div>
   <div id='compose'>
@@ -84,10 +97,11 @@
     </div>
   </div>
 </div>
-</body>
-    
-<script type="text/javascript" src="jquery.min.js"> 
+<div id='overlay'></div>
+<div id='closePop'><i class='material-icons'>X</i></div>
+    <script type="text/javascript" src="jquery.min.js"> 
 </script>
+
 <script type="text/javascript" src="index.js"> 
 </script>
     <script><?php session_start(); 
@@ -99,11 +113,12 @@ if(curuser!= undefined || usernameshit!= null){
         window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
     
     // code to log out
-        <?php session_start(); $_SESSION['userid'] == null; session_destroy(); ?>
+
     //
-         alert("Welcome " + curuser);
+    loadposts();
 
 }
         
     </script>
+    </body>
 </html>

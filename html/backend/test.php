@@ -2,7 +2,7 @@
 require_once 'configuration.php';
 set_time_limit(99999999);
 ini_set('memory_limit', "9999M");
-
+echo "Script to download group posts. Please be patient. <br>";
 
  
 try {
@@ -32,7 +32,7 @@ function fetchUrl($url) {
 
 $url = "https://graph.facebook.com/$groupid/feed/?access_token=$accesstoken&fields=id,from,created_time,message,message_tags,type,story,status_type,full_picture";
 //echo $url . '</br>';
-$numberofpages = 10;
+$numberofpages = 5;
 $numberofpagesdone = 0;
 while($numberofpagesdone != $numberofpages){
     $json = fetchUrl($url);

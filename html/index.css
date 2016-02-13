@@ -12,6 +12,9 @@ body {
 .container
 {
   transform:scale(0.8);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
 }
 /*material icons*/
 @font-face {
@@ -34,10 +37,9 @@ body {
 }
 /* Container */
 .container {
-  position: relative;
+  position: fixed;
   max-width: 460px;
   width: 100%;
-  margin: 0 auto 100px;
 }
 .container.active .card:first-child {
   margin: 0 15px;
@@ -297,7 +299,8 @@ font-size: 24px;
   border-radius: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   color: #ffffff;
-  font-size: 58px;
+  font-size: 40px;
+    font-weight: 600;
   line-height: 140px;
   text-align: center;
   cursor: pointer;
@@ -576,15 +579,15 @@ overflow: hidden;
 {
 height:90%;
 box-sizing:border-box;
-padding-bottom: 100px; 
 margin:20px;
-overflow:scroll;
+overflow-y:scroll;
      
 }
 #post_wrapper>.post>.options
     {
         right:10px;
         position: absolute;
+        z-index:+500;
     }
 #post_wrapper>.post>.options>span>i
     {
@@ -765,8 +768,111 @@ overflow:scroll;
   width: 100%;
   background:rgba(200,200,200,0.4);
 }
-
+#main.inactive
+{
+    -webkit-filter:brightness(0.5);
+    -moz-filter:brightness(0.5);
+    filter:brightness(0.5);
+}
 
 .postcontent{
     padding: 20px;
+}
+.popUp
+{
+    position:fixed;
+    background:rgba(0,0,0,0.5);
+    z-index:+100;
+    transition:all 0.2s;
+}
+.popUp.final
+{
+    left:50% !important;
+    top:50% !important;
+    transform:translate(-50%,-50%);
+    height:80%;
+    width:auto;
+}
+#closePop
+{
+    position:fixed;
+    top:30px;
+    right:50px;
+    width:50px;
+    cursor:pointer;
+    height:50px;
+    border-radius:50%;
+    border:2px rgba(255,255,255,0.8) solid;
+    color:rgba(255,255,255,0.8);
+    line-height: 50px;
+    text-align: center;
+    display: none;
+    z-index: +500;
+}
+#closePop>i
+{
+    line-height:50px;
+    font-size:35px;
+}
+#overlay
+{
+    position: fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:rgba(0,0,0,0.2);
+    display: none;
+    z-index: +30;
+}
+.post .postContent
+{
+    display: block;
+}
+.post .details
+{
+    display: block;
+    width:100%;
+    position: relative;
+    height:20px;
+}
+.post .author
+{
+    font-size:15px;
+    float:left;
+    display:inline-block;
+    font-weight:700;
+}
+.post .date
+{
+    font-size:12px;
+    float: right;
+    display:inline-block;
+    color:#aaa;
+}
+.post .message
+{
+    display: block;
+    margin-top:10px;
+    position: relative;
+}
+#logout
+{
+    float: right;
+    display: block;
+    transform:translateY(-50%);
+    top:50%;
+    right:20px;
+    color:white;
+    padding:10px 20px;
+    position: absolute;
+    border-radius:2px;
+}
+#logout:hover
+{
+    background:rgba(0,0,0,0.2);
+}
+#logout:active
+{
+    background:rgba(0,0,0,0.4);
 }
