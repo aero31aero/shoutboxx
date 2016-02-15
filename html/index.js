@@ -175,7 +175,13 @@ function validatereg(username,bitsid,password){
     return "shit";
 }
 
+function onpasspress(e){
+    if(e.keyCode === 13){
+            login();
+        }
 
+        return false;
+}
 function login(){
     var request= getRequest();  
     var username=document.getElementById('Username').value;    
@@ -462,42 +468,42 @@ document.getElementById('close_composer').onclick=function(){
 }
 
 document.getElementById('open_composer').onmouseup=function(){
-//  document.getElementById('composer').classList.add('active');
-//  this.style.display='none';
-//  document.getElementById('publish_comp').style.display='block';
+    //  document.getElementById('composer').classList.add('active');
+    //  this.style.display='none';
+    //  document.getElementById('publish_comp').style.display='block';
     swal({
-      title: "How can we improve?",
-      type: "input",
-        inputType: "text",
-      showCancelButton: true,
-      closeOnConfirm: true,
-      animation: "slide-from-bottom",
-      "confirmButtonColor": "#0097a7",
-      inputPlaceholder: "Write your suggestions here..."
-},
-function(inputValue){
-  if (inputValue === false) return false;
-  
-  if (inputValue === "") {
-        swal.showInputError("You need to write something!");
-        return false
-  }
-  var request=getRequest();
-  var params="backend/feedback.php?userid=" + curuserid +"&feedback=" + inputValue;
-    request.open("GET",params,true);
-    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    request.setRequestHeader("Content-length",params.length);
-    request.setRequestHeader("Connection","close");
-    request.send();   
-    request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {     
-                
-                    toastr.success('Thanks for your feedback!', 'Feedback Submitted');
-                    
-                
-            }
-        };
-});
+          title: "How can we improve?",
+          type: "input",
+            inputType: "text",
+          showCancelButton: true,
+          closeOnConfirm: true,
+          animation: "slide-from-bottom",
+          "confirmButtonColor": "#0097a7",
+          inputPlaceholder: "Write your suggestions here..."
+    },
+    function(inputValue){
+      if (inputValue === false) return false;
+
+      if (inputValue === "") {
+            swal.showInputError("You need to write something!");
+            return false
+      }
+      var request=getRequest();
+      var params="backend/feedback.php?userid=" + curuserid +"&feedback=" + inputValue;
+        request.open("GET",params,true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.setRequestHeader("Content-length",params.length);
+        request.setRequestHeader("Connection","close");
+        request.send();   
+        request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {     
+
+                        toastr.success('Thanks for your feedback!', 'Feedback Submitted');
+
+
+                }
+            };
+    });
 }
 document.getElementById('publish_comp').onmouseup=function(){
   //execute publishing script here 
