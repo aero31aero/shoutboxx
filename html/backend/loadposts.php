@@ -11,7 +11,7 @@ try {
 
 $userid=mysql_escape_string($_GET['userid']);
 
-$sql = "SELECT tag FROM tags WHERE userid=$userid;";
+$sql = "SELECT tag FROM tags WHERE userid=$userid and isactive=1;";
 $output="";
 $result =$conn->query($sql);
 $tagarray[0]=" ";
@@ -39,10 +39,50 @@ else{
 $sql = "SELECT postid,mid,creator,message,created_time+ interval 30 minute + interval 5 hour as created_time,fullimage FROM posts WHERE (";
 $arrlength = count($tagarray);
 for($x = 0; $x < $arrlength-1; $x++) {
-    $sql= $sql . "message LIKE '%". $tagarray[$x] . "%' OR  ";
+    //exception-handling-for-tags
+    if(strcmp($tagarray[$x],"clubs-all")==0){
+        
+        $sql= $sql . "message LIKE '%dance %' OR ";
+        $sql= $sql . "message LIKE '% elas %' OR message like 'elas %' OR ";
+        $sql= $sql . "message LIKE '%designers anonymous%' OR ";
+        $sql= $sql . "message LIKE '%music club%' OR ";
+        $sql= $sql . "message LIKE '%movie club%' OR ";
+        $sql= $sql . "message LIKE '%shades club%' OR ";
+        $sql= $sql . "message LIKE '%vfx club%' OR ";
+        $sql= $sql . "message LIKE '%martial arts club%' OR ";
+        $sql= $sql . "message LIKE '%hindi tarang%' OR ";
+        $sql= $sql . "message LIKE '%journal club%' OR ";
+        $sql= $sql . "message LIKE '%bulls and bears club%' OR ";
+        $sql= $sql . "message LIKE '%quiz club%' OR ";
+        $sql= $sql . "message LIKE '%dramatics club%' OR ";
+    }
+    
+    $sql= $sql . "message LIKE '%". $tagarray[$x] . "%' OR creator LIKE '%". $tagarray[$x] . "%' OR ";
 }
-$sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%') AND  ";
-$sql= $sql . "ismessage=TRUE ORDER BY created_time DESC LIMIT 50";
+
+
+//exception-handling-for-tags
+    if(strcmp($tagarray[$arrlength-1],"clubs-all")==0){
+        
+        $sql= $sql . "message LIKE '%dance %' OR ";
+        $sql= $sql . "message LIKE '% elas %' OR message like 'elas %' OR ";
+        $sql= $sql . "message LIKE '%designers anonymous%' OR ";
+        $sql= $sql . "message LIKE '%music club%' OR ";
+        $sql= $sql . "message LIKE '%movie club%' OR ";
+        $sql= $sql . "message LIKE '%shades club%' OR ";
+        $sql= $sql . "message LIKE '%vfx club%' OR ";
+        $sql= $sql . "message LIKE '%martial arts club%' OR ";
+        $sql= $sql . "message LIKE '%hindi tarang%' OR ";
+        $sql= $sql . "message LIKE '%journal club%' OR ";
+        $sql= $sql . "message LIKE '%bulls and bears club%' OR ";
+        $sql= $sql . "message LIKE '%quiz club%' OR ";
+        $sql= $sql . "message LIKE '%dramatics club%' OR ";
+    }
+$sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%' OR creator LIKE '%". $tagarray[$arrlength-1] . "%') AND  ";
+$sql= $sql . "ismessage=TRUE ORDER BY created_time DESC ";
+if($userid!=0){
+    $sql = $sql . "LIMIT 50;";
+}
         //echo $sql;
         
         $result1 =$conn->query($sql);

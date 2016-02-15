@@ -9,11 +9,19 @@ try {
 }
 
 $tagid=mysql_escape_string($_GET['tagid']);
+$userid=mysql_escape_string($_GET['userid']);
 
-$sql = "DELETE FROM tags WHERE tagid = '$tagid';";
+
+$sql = "UPDATE tags SET isactive = 'FALSE' WHERE tagid = '$tagid';";
 
 if ($conn->query($sql) === TRUE) {
-    echo"success"; 
+	$tagidforlog = $tagid;
+        $useridforlog = $userid;
+        $sql = "INSERT INTO logs (userid,message,tagid) 
+        VALUES ( '$useridforlog' , 'TAG_REMOVE', '$tagidforlog' );";
+        //echo $sql . "<br>";
+        $conn->query($sql);
+    echo"success";
 } else {
     echo "fail";
 }

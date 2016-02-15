@@ -23,6 +23,11 @@ $num_row = mysqli_num_rows($result);
 if( $num_row >=1 ) { 
     $_SESSION['userid']=$user_row['userid'];
     echo $user_row['userid'];
+    $useridforlog=$user_row['userid'];
+    $sql = "INSERT INTO logs (userid,message) 
+    VALUES ( '$useridforlog' , 'LOGIN' );";
+    //echo $sql . "<br>";
+    $conn->query($sql);
 }
 else{
    echo "fail";

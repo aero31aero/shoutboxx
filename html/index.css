@@ -21,7 +21,7 @@ body {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(material-icons.woff2) format('woff2');
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(libraries/material-icons.woff2) format('woff2');
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -413,7 +413,7 @@ font-size: 24px;
   display: inline-block;
   width: 0px;
   border-right: #ccc solid 1px;
-  z-index: +1;
+  z-index: +1000;
   transition-delay:1s;
   transition:width 0.5s ease-out;
 }
@@ -495,6 +495,7 @@ font-size: 24px;
   box-sizing:border-box;
   padding:25px;
   height: 90px;
+  background:rgba(0,151,167,1);
   border-top:rgba(0,40,60,0.1) solid 1px;
 }
 #sidebar>.input_wrapper>input
@@ -587,7 +588,7 @@ overflow-y:scroll;
     {
         right:10px;
         position: absolute;
-        z-index:+500;
+        z-index:+50;
     }
 #post_wrapper>.post>.options>span>i
     {
@@ -638,6 +639,7 @@ overflow-y:scroll;
         bottom: 0px;
         left:100%;
         margin-left:-25px;
+        z-index:+100;
     } 
 #compose>div.composer
 {
@@ -654,15 +656,20 @@ overflow-y:scroll;
 }
 #compose>div.button
 {
-  width: 50px;
+  
+  right:25px;
+  position: absolute;
+  background:rgba(0,151,167,1); 
+  
+}
+div.button
+{
+    width: 50px;
   height: 50px;
   line-height: 50px;
   display: block;
-  right:25px;
-  position: absolute;
-  border-radius: 50%;
-  background:rgba(0,151,167,1); 
-  text-align: center;
+border-radius: 50%;
+text-align: center;
   cursor: pointer;
   color:white;
   font-size: 18px;
@@ -675,7 +682,7 @@ overflow-y:scroll;
     display: none;
   animation:bloop .2s 1 linear;  
 }
-#compose>div.button:active
+div.button:active
 {
   transform:scale(0.9);
   box-shadow:0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -792,6 +799,7 @@ overflow-y:scroll;
     transform:translate(-50%,-50%);
     height:80%;
     width:auto;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
 }
 #closePop
 {
@@ -802,12 +810,17 @@ overflow-y:scroll;
     cursor:pointer;
     height:50px;
     border-radius:50%;
-    border:2px rgba(255,255,255,0.8) solid;
     color:rgba(255,255,255,0.8);
     line-height: 50px;
     text-align: center;
+    box-sizing: border-box;
     display: none;
     z-index: +500;
+    transition:all 0.1s;
+}
+#closePop:hover
+{
+    box-shadow:0px 0px 0px 2px rgba(255,255,255,0.8);
 }
 #closePop>i
 {
@@ -821,7 +834,7 @@ overflow-y:scroll;
     right:0;
     left:0;
     bottom:0;
-    background:rgba(0,0,0,0.2);
+    background:rgba(0,0,0,0.75);
     display: none;
     z-index: +30;
 }
@@ -875,4 +888,21 @@ overflow-y:scroll;
 #logout:active
 {
     background:rgba(0,0,0,0.4);
+}
+#button_drawer
+{
+    display: none;
+    position: fixed;
+    bottom:25px;
+    right:15px;
+}
+#button_drawer>div.button
+{
+    float:left;
+    margin-right:25px;
+    background:rgba(0,151,167,1);
+    animation:bloop .2s 1 linear;
+}
+.rotated{
+    transform: rotate(90deg);
 }

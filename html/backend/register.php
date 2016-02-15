@@ -32,6 +32,24 @@ else{
         if( $num_row >=1 ) { 
             //$_SESSION['user_name']=$username;
             echo $user_row['userid'];
+	    $useridforlog = $user_row['userid'];
+	    $sql = "INSERT INTO logs (userid,message) 
+            VALUES ( '$useridforlog' , 'REGISTER' );";
+    	    //echo $sql . "<br>";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'clubs-all', 1 );";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'pearl', 1 );";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'movie screen', 1 );";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'swd', 1 );";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'workshop', 1 );";
+            $conn->query($sql);
+            $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'induction', 1 );";
+            $conn->query($sql);
+            
         }
         else{
             echo "fail";
@@ -46,5 +64,4 @@ else{
    
 		
 $conn->close();
-?>document.getElementById("post_wrapper").innerHTML=document.getElementById("post_wrapper").innerHTML + request.responseText;tagholderHtagHolderrefreshTags();
-                    this.value="";
+?>

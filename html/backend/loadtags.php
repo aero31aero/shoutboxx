@@ -11,7 +11,7 @@ try {
 
 $userid=mysql_escape_string($_GET['userid']);
 
-$sql = "SELECT * FROM tags WHERE userid='$userid';";
+$sql = "SELECT * FROM tags WHERE userid='$userid' AND isactive=1;";
 
 $result =$conn->query($sql);
 

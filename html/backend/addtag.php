@@ -10,7 +10,7 @@ try {
 
 $tag=mysql_escape_string($_GET['tag']);
 $userid=mysql_escape_string($_GET['userid']);
-$sql = "INSERT INTO tags (userid,tag) VALUES ( $userid , '$tag' );";
+$sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $userid , '$tag', 1 );";
 
 if ($conn->query($sql) === TRUE) {
     $sql = "SELECT * FROM tags WHERE userid='$userid' AND tag='$tag';";
@@ -22,6 +22,13 @@ if ($conn->query($sql) === TRUE) {
         //$_SESSION['user_name']=$username;
         //echo "<li tagid='" . $tag_row['tagid'] . "'><span>&#10005;</span>" . $tag_row['tag'] . "</li>";
         echo $tag_row['tagid'];
+        $tagidforlog = $tag_row['tagid'];
+        $useridforlog = $tag_row['userid'];
+        $sql = "INSERT INTO logs (userid,message,tagid) 
+        VALUES ( '$useridforlog' , 'TAG_ADD', '$tagidforlog' );";
+        //echo $sql . "<br>";
+        $conn->query($sql);
+
     }
     else{
         echo "fail";

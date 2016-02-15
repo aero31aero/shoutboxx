@@ -4,9 +4,31 @@ toggle=document.getElementsByClassName('toggle')[0],
 buttons=container.getElementsByTagName('button'),
 main=document.getElementById('main'),
 sidebar=document.getElementById('sidebar');
+searchbar=document.getElementById('searchbar');
 prefIn=sidebar.getElementsByTagName('input')[0];
 tagHolder=document.getElementById('tags');
 refreshTags();
+
+function loadToasterOptions(){
+  toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "100",
+  "timeOut": "10000",
+  "extendedTimeOut": "0",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+} 
+};
+loadToasterOptions();
 var curuserid=0;
 
 //getXMLHTTPrequest
@@ -43,7 +65,7 @@ toggle.onclick=function(){
 close.onclick=function(){
     container.classList.remove('active');
     //toggle.innerHTML="&#9998;";
-    toggle.innerHTML="NEW";
+    toggle.innerHTML="add";
 }
 
 //set sidebar height to window height
@@ -78,21 +100,75 @@ function register(){
     var username=document.getElementById('name').value;
     var bitsid=document.getElementById('bitsid').value;
     var password=document.getElementById('password').value;
-    var params="backend/register.php?username=" + username +"&password=" + password + "&bitsid=" + bitsid ;
-    request.open("POST",params,true);
-    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    request.setRequestHeader("Content-length",params.length);
-    request.setRequestHeader("Connection","close");
-    request.send();
-    request.onreadystatechange = function() {
+    if(validatereg(username,bitsid,password)!="fail"){
+  
+        var params="backend/register.php?username=" + username +"&password=" + password + "&bitsid=" + bitsid ;
+        request.open("POST",params,true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.setRequestHeader("Content-length",params.length);
+        request.setRequestHeader("Connection","close");
+        request.send();
+        request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
+                    toastr.success('You have been registered as ' + username + '.', 'Registration Successful');
                     container.classList.remove('active');
                     //toggle.innerHTML="&#9998;";
-                    toggle.innerHTML="NEW";
+                    toggle.innerHTML="add";               
+                    document.getElementById('Username').value=username;
+                }
+                if(request.responseText=="fail"){
+    //                        swal({
+    //                          title: "Username Exists",
+    //                          text: "I'm sorry but the username you entered is already taken. Please try another username.",
+    //                          type: "error",
+    //                          confirmButtonText: "Okay!"
+    //                        });
+                        toastr.error('This username is already taken.', 'Username Taken');
+                    }
                 }
             }
-        };    
+    };    
+
+}
+function validatereg(username,bitsid,password){
+       var nameRegex = /^[a-zA-Z\-\d]+$/;
+    var bitsidRegex = /(f20)\d{5}/g;
+    var validfirstUsername = username.match(nameRegex);
+    var validbitsid = bitsid.match(bitsidRegex);
+    if(validfirstUsername == null){
+//        swal({
+//              title: "Oops!",
+//              text: "I'm sorry but the username you entered is invalid. Please make sure it contains only alphabets and numbers.",
+//              type: "error",
+//              confirmButtonText: "Okay!"
+//        });
+        toastr.error('Please use alphabets and numbers.', 'Username Invalid');
+        return "fail";
+    }
+    if(validbitsid == null || bitsid.length!=8 ){
+//        swal({
+//              title: "Oops!",
+//              text: "I'm sorry but the username you entered is invalid. Please make sure it contains only alphabets and numbers.",
+//              type: "error",
+//              confirmButtonText: "Okay!"
+//        });
+        toastr.error('Please enter the ID in the format mentioned.', 'Bits ID Invalid');
+        return "fail";
+    }
+    if(password.length < 8 || password.length > 40){
+//        swal({
+//             title: "Oops!",
+//             text: "I'm sorry but the password you entered is too short. .",
+//             type: "error",
+//             confirmButtonText: "Okay!"
+//        });
+        toastr.error('Enter a password between 8 and 40 characters.', 'Password Invalid');
+        return "fail";
+    }
+    
+   
+    return "shit";
 }
 
 
@@ -109,12 +185,16 @@ function login(){
     request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
+                    
                     curuserid=request.responseText;
                     //setusercookie(request.responseText);
                     loadtags();
                     bringmain();                    
                     loadposts();
-                    
+                    toastr.success('You have been logged in as ' + username + '.', 'Authentication Successful');
+                }
+                else{
+                    toastr.error('Please check your username and password.', 'Authentication Failed');
                 }
             } 
         };
@@ -161,6 +241,28 @@ function loadposts(){
     var request= getRequest();
     
     var params="backend/loadposts.php?userid=" + curuserid;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("post_wrapper").innerHTML=request.responseText;
+                    onPostLoad();
+                    popUps();
+                    //appendChild(request.responseText);
+                                        
+                }
+            }
+        };
+    
+}
+function loadallposts(){
+    var request= getRequest();
+    
+    var params="backend/loadposts.php?userid=0";
     request.open("GET",params,true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.setRequestHeader("Content-length",params.length);
@@ -231,7 +333,8 @@ function bringmain(){
     //    alert('shit happened');
     //}
     main.classList.add('active');
-    window.setTimeout(function(){document.getElementById('open_composer').style.display='block';},1000);
+    window.setTimeout(function(){document.getElementById('open_composer').style.display='block';
+                                document.getElementById('button_drawer').style.display='block';},1000);
             
 }
 
@@ -269,10 +372,41 @@ function bringmain(){
     }
   }
   
+  
+  //code to implement search
+  searchbar.onkeypress=function(e){
+    
+        var request= getRequest();
+      console.log(this.value);
+      var params="backend/loadposts.php?userid=" + curuserid;
+      if(this.value.length>1){
+            params="backend/searchposts.php?query=" + this.value ;
+      }
+        //var valueoftag=this.value;
+        //this.value="";
+        //alert(valueoftag);
+        request.open("POST",params,true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.setRequestHeader("Content-length",params.length);
+        request.setRequestHeader("Connection","close");
+        request.send();
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){                    
+                    //console.log(request.responseText+" HELLO");
+                    document.getElementById("post_wrapper").innerHTML=request.responseText;
+                    onPostLoad();
+                    popUps();                  
+                }
+            }
+        };
+      
+  }
+  
   var bookmarks=document.getElementsByClassName('bookmarks');
   for(i=0;i<bookmarks.length;i++)
       {
-          bookmarks[i].onclick=function(){
+              bookmarks[i].onclick=function(){
               console.log("Clicked here: " + i);
               this.classList.toggle('active');
               if(this.classList.contains('active'))
@@ -291,7 +425,7 @@ function refreshTags(){
             
             console.log("This is removed: " + this.parentElement.getAttribute('tagid'));
             var request= getRequest();
-            var params="backend/removetag.php?tagid=" + this.parentElement.getAttribute('tagid');
+            var params="backend/removetag.php?userid=" + curuserid +"&tagid=" + this.parentElement.getAttribute('tagid');
             request.open("GET",params,true);
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.setRequestHeader("Content-length",params.length);
