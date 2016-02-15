@@ -56,6 +56,10 @@ for($x = 0; $x < $arrlength-1; $x++) {
         $sql= $sql . "message LIKE '%quiz club%' OR ";
         $sql= $sql . "message LIKE '%dramatics club%' OR ";
     }
+    if(strcmp($tagarray[$x],"all-posts")==0){
+        
+        $sql= $sql . "message LIKE '%' OR ";
+    }
     
     $sql= $sql . "message LIKE '%". $tagarray[$x] . "%' OR creator LIKE '%". $tagarray[$x] . "%' OR ";
 }
@@ -78,6 +82,10 @@ for($x = 0; $x < $arrlength-1; $x++) {
         $sql= $sql . "message LIKE '%quiz club%' OR ";
         $sql= $sql . "message LIKE '%dramatics club%' OR ";
     }
+if(strcmp($tagarray[$x],"all-posts")==0){
+        
+        $sql= $sql . "message LIKE '%' OR ";
+    }
 $sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%' OR creator LIKE '%". $tagarray[$arrlength-1] . "%') AND  ";
 $sql= $sql . "ismessage=TRUE ORDER BY created_time DESC ";
 if($userid!=0){
@@ -94,9 +102,9 @@ if($userid!=0){
             //$_SESSION['user_name']=$username;
 
             while($post_row = mysqli_fetch_array($result1)) {                
-                $output=$output. "<li class='post' postid=" . $post_row['postid'] . "><div class='options'><span onclick=\"window.open('https://www.facebook.com/" . $post_row['mid'] . "'); return false;\"><i class='material-icons'>reply_all</i></span><span class='bookmarks'><i class='material-icons'>bookmark_border</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
+                $output=$output. "<li class='post' postid=" . $post_row['postid'] . "><div class='options'><span onclick=\"window.open('https://www.facebook.com/" . $post_row['mid'] . "'); return false;\" title='Open in Facebook'><i class='material-icons'>reply_all</i></span><span class='bookmarks' title='Bookmarks[TODO]' ><i class='material-icons'>bookmark_border</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
                 if($post_row['fullimage']!=NULL){
-                   /* 
+                   /*  
    <img src="thumbnails.jpg" />
 </a>*/
                     $output= $output . "<p>" . '<div class="image-link">' . "<img width='460px' src='" . $post_row['fullimage'] . "'/></div></p>";   

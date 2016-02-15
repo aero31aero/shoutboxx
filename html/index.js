@@ -9,6 +9,8 @@ prefIn=sidebar.getElementsByTagName('input')[0];
 tagHolder=document.getElementById('tags');
 refreshTags();
 
+
+
 function loadToasterOptions(){
   toastr.options = {
   "closeButton": false,
@@ -53,6 +55,8 @@ function onPostLoad(){
             this.classList.remove('active');    
         }
     }
+    scrollable=document.getElementById('scrollable');
+    scrollable.scrollTo(0,0);
 }
 
 //function for signup dialog box to open
@@ -260,22 +264,24 @@ function loadposts(){
     
 }
 function loadallposts(){
-    var request= getRequest();
     
-    var params="backend/loadposts.php?userid=0";
-    request.open("GET",params,true);
-    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    request.setRequestHeader("Content-length",params.length);
-    request.setRequestHeader("Connection","close");
-    request.send();   
-    request.onreadystatechange = function() {
+    var request= getRequest();
+        var params="backend/addtag.php?userid="+curuserid+"&tag=all-posts" ;
+        var valueoftag=this.value;
+        this.value="";
+        //alert(valueoftag);
+        request.open("POST",params,true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.setRequestHeader("Content-length",params.length);
+        request.setRequestHeader("Connection","close");
+        request.send();
+        request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
-                if(request.responseText!="fail"){
-                    document.getElementById("post_wrapper").innerHTML=request.responseText;
-                    onPostLoad();
-                    popUps();
-                    //appendChild(request.responseText);
-                                        
+                if(request.responseText!="fail"){                    
+                    console.log(request.responseText+" HELLO");
+                    loadtags();
+                    loadposts();
+                    toastr.success('Remove the \'all-posts\' tag when done.', 'Showing All Posts');
                 }
             }
         };
@@ -359,7 +365,8 @@ function bringmain(){
                 if(request.responseText!="fail"){                    
                     console.log(request.responseText+" HELLO");
                     loadtags();
-                    loadposts();                    
+                    loadposts(); 
+                    toastr.success('Added new tag \'' + valueoftag +'\'.', 'Tag Added');
                 }
             }
         };
@@ -437,6 +444,7 @@ function refreshTags(){
                             console.log(request.responseText);
                             //appendChild(request.responseText);
                             loadposts();
+                            toastr.success('Tag has been removed.', 'Tag Removed');
                         }
                     }
                 };
@@ -454,9 +462,42 @@ document.getElementById('close_composer').onclick=function(){
 }
 
 document.getElementById('open_composer').onmouseup=function(){
-  document.getElementById('composer').classList.add('active');
-  this.style.display='none';
-  document.getElementById('publish_comp').style.display='block';
+//  document.getElementById('composer').classList.add('active');
+//  this.style.display='none';
+//  document.getElementById('publish_comp').style.display='block';
+    swal({
+      title: "How can we improve?",
+      type: "input",
+        inputType: "text",
+      showCancelButton: true,
+      closeOnConfirm: true,
+      animation: "slide-from-bottom",
+      "confirmButtonColor": "#0097a7",
+      inputPlaceholder: "Write your suggestions here..."
+},
+function(inputValue){
+  if (inputValue === false) return false;
+  
+  if (inputValue === "") {
+        swal.showInputError("You need to write something!");
+        return false
+  }
+  var request=getRequest();
+  var params="backend/feedback.php?userid=" + curuserid +"&feedback=" + inputValue;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {     
+                
+                    toastr.success('Thanks for your feedback!', 'Feedback Submitted');
+                    
+                
+            }
+        };
+});
 }
 document.getElementById('publish_comp').onmouseup=function(){
   //execute publishing script here 
@@ -466,7 +507,7 @@ function logout(){
     console.log("sdf");
     var request= getRequest();
     
-    var params="backend/logout.php";
+    var params="backend/logout.php?userid="+curuserid;
     request.open("GET",params,true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.setRequestHeader("Content-length",params.length);
