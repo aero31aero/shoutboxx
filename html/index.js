@@ -128,7 +128,7 @@ function register(){
     //                          type: "error",
     //                          confirmButtonText: "Okay!"
     //                        });
-                        toastr.error('This username is already taken.', 'Username Taken');
+                        toastr.error('This username or Bits id is already taken.', 'Username or ID Taken');
                     }
                 }
             }
@@ -344,7 +344,10 @@ function bringmain(){
     //if(main.getAttribute('id')='regbutt'){
     //    alert('shit happened');
     //}
+    main.classList.remove('hidden-element');
+    main.classList.add('shown-element');
     main.classList.add('active');
+    
     window.setTimeout(function(){document.getElementById('open_composer').style.display='block';
                                 document.getElementById('button_drawer').style.display='block';},1000);
             
@@ -354,34 +357,41 @@ function bringmain(){
 //code to add new tags
   var counter=1;
   prefIn.onkeypress=function(e){
-    if(e.keyCode==13)
+    if( e.keyCode==13 )
     {
-        var request= getRequest();
-        var params="backend/addtag.php?userid="+curuserid+"&tag=" + this.value ;
-        var valueoftag=this.value;
-        this.value="";
-        //alert(valueoftag);
-        request.open("POST",params,true);
-        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        request.setRequestHeader("Content-length",params.length);
-        request.setRequestHeader("Connection","close");
-        request.send();
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {                
-                if(request.responseText!="fail"){                    
-                    console.log(request.responseText+" HELLO");
-                    loadtags();
-                    loadposts(); 
-                    toastr.success('Added new tag \'' + valueoftag +'\'.', 'Tag Added');
+        if(this.value!="" && this.value!=" "){
+            
+        
+            var request= getRequest();
+            var params="backend/addtag.php?userid="+curuserid+"&tag=" + this.value ;
+            var valueoftag=this.value;
+            this.value="";
+            //alert(valueoftag);
+            request.open("POST",params,true);
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.setRequestHeader("Content-length",params.length);
+            request.setRequestHeader("Connection","close");
+            request.send();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {                
+                    if(request.responseText!="fail"){                    
+                        console.log(request.responseText+" HELLO");
+                        loadtags();
+                        loadposts(); 
+                        toastr.success('Added new tag \'' + valueoftag +'\'.', 'Tag Added');
+                    }
                 }
-            }
-        };
-//        var newTag=document.createElement('li');
-//        newTag.setAttribute('index',++counter);
-//        tagHolder.appendChild(newTag);
-//        newTag.innerHTML='<span>&#10005;</span>'+this.value;
-//        refreshTags();
-//        this.value="";                                        
+            };
+    //        var newTag=document.createElement('li');
+    //        newTag.setAttribute('index',++counter);
+    //        tagHolder.appendChild(newTag);
+    //        newTag.innerHTML='<span>&#10005;</span>'+this.value;
+    //        refreshTags();
+    //        this.value="";  
+        }
+        else{
+            toastr.error('Please chack the tag content', 'Invalid Tag');
+        }
     }
   }
   

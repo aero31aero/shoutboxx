@@ -392,7 +392,7 @@ font-size: 24px;
 /*Main Page*/
 #main
 {
-  display: block;
+  
   width: 100%;
   left: 100%;
   top:0;
@@ -567,13 +567,15 @@ display:none;
 {
 width:500;
 min-height:200px;
+
 box-shadow:0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 margin:15px 0px;
 list-style-type:none;
 background:#fff;
 position:relative;
 border-radius:5px;
-overflow: hidden;
+overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #scrollable
@@ -606,7 +608,8 @@ overflow-y:scroll;
     {
         list-style-type: none;
         width:40px;
-        position: relative;
+        
+        position:relative;
         display: block;
         height:40px;
         border-radius:50%;
@@ -905,4 +908,13 @@ div.button:active
 }
 .rotated{
     transform: rotate(90deg);
+}
+
+.hidden-element{
+    display: none;
+}
+
+.shown-element{
+    display: block;
+}
 }

@@ -13,7 +13,7 @@ $username=mysql_escape_string($_GET['username']);
 $password=mysql_escape_string($_GET['password']);
 $bitsid=mysql_escape_string($_GET['bitsid']);
 
-$sql = "SELECT * FROM users WHERE username='$username';";
+$sql = "SELECT * FROM users WHERE username='$username' OR bitsid='$bitsid';";
 $result =$conn->query($sql);
 $num_row = mysqli_num_rows($result);
 if( $num_row >=1 ) { 

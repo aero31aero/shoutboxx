@@ -1,7 +1,7 @@
 <?php
 //session_start();
 require_once 'configuration.php';
-
+$limit=50;
 try {   
     $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
     
@@ -59,6 +59,7 @@ for($x = 0; $x < $arrlength-1; $x++) {
     if(strcmp($tagarray[$x],"all-posts")==0){
         
         $sql= $sql . "message LIKE '%' OR ";
+        $limit=100;
     }
     
     $sql= $sql . "message LIKE '%". $tagarray[$x] . "%' OR creator LIKE '%". $tagarray[$x] . "%' OR ";
@@ -85,11 +86,12 @@ for($x = 0; $x < $arrlength-1; $x++) {
 if(strcmp($tagarray[$x],"all-posts")==0){
         
         $sql= $sql . "message LIKE '%' OR ";
+        $limit=100;
     }
 $sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%' OR creator LIKE '%". $tagarray[$arrlength-1] . "%') AND  ";
 $sql= $sql . "ismessage=TRUE ORDER BY created_time DESC ";
 if($userid!=0){
-    $sql = $sql . "LIMIT 50;";
+    $sql = $sql . "LIMIT " . $limit . ";";
 }
         //echo $sql;
         

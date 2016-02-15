@@ -1,7 +1,10 @@
 
 <html>
 <head>
-  <title>SBX Scraper</title>
+    <link rel="icon" 
+      type="image/png" 
+      href="favicon.png">
+  <title>SBX Headset</title>
   
 </head>
 <link rel="stylesheet" type="text/css" href="index.css">
@@ -16,10 +19,10 @@
 <div class="container">
   <div class="card"></div>
   <div class="card">
-    <h1 class="title">Login</h1>
+    <h1 class="title">SBX Headset</h1>
     
       <div class="input-container">
-        <input type="text" id="Username" required="required"/>
+        <input type="text" id="Username" required="required" onkeypress="onpasspress(event)"/>
         <label for="Username">Username</label>
         <div class="bar"></div>
       </div>
@@ -31,7 +34,7 @@
       <div class="button-container">
         <button><span>Login</span></button>
       </div>
-      <div class="footer"><a href="#">Forgot your password?</a></div>
+      <div class="footer" onclick="alert('Well, you are fucked!')"><a href="#">Forgot your password?</a></div>
     
   </div>
   <div class="card alt">
@@ -62,7 +65,7 @@
     
   </div>
 </div>
-<div id="main"> 
+<div id="main" class="hidden-element"> 
   <div id='wrapper'>
       
   <!-- popup -->
@@ -113,6 +116,8 @@
     <link rel="stylesheet" type="text/css" href="libraries/toastr.min.css">
 <script src="libraries/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="libraries/sweetalert.css">
+    <script src="libraries/materialize.min.js"></script>
+
 <script src="libraries/toastr.min.js"></script>
 
 <script type="text/javascript" src="index.js"></script>
