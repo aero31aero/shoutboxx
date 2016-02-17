@@ -11,6 +11,7 @@
 
 	session_start(); 
 	$_SESSION['userid'] == null; 
+	$_SESSION['username'] == null;
 	session_destroy(); 
 	echo 'Done';
 

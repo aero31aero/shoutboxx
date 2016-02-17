@@ -22,6 +22,7 @@ $num_row = mysqli_num_rows($result);
 
 if( $num_row >=1 ) { 
     $_SESSION['userid']=$user_row['userid'];
+    $_SESSION['username']=$user_row['username'];
     echo $user_row['userid'];
     $useridforlog=$user_row['userid'];
     $sql = "INSERT INTO logs (userid,message) 

@@ -12,11 +12,14 @@ try {
 $username=mysql_escape_string($_GET['username']);
 $password=mysql_escape_string($_GET['password']);
 $bitsid=mysql_escape_string($_GET['bitsid']);
-
+//if($username=='' || $password='' || $bitsid='' || $username==NULL || $password=NULL || $bitsid==NULL){ 
+//echo 'fail';
+//}
+//else {
 $sql = "SELECT * FROM users WHERE username='$username';";
 $result =$conn->query($sql);
 $num_row = mysqli_num_rows($result);
-if( $num_row >=1 ) { 
+if( $num_row >=1 ){ 
     echo "fail";
 }
 else{
@@ -59,7 +62,7 @@ else{
     }
 }  
 
-
+//    }
         
    
 		

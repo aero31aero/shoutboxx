@@ -3,11 +3,34 @@ close=document.getElementsByClassName('close')[0],
 toggle=document.getElementsByClassName('toggle')[0],
 buttons=container.getElementsByTagName('button'),
 main=document.getElementById('main'),
-sidebar=document.getElementById('sidebar');
-searchbar=document.getElementById('searchbar');
-prefIn=sidebar.getElementsByTagName('input')[0];
-tagHolder=document.getElementById('tags');
+sidebar=document.getElementById('sidebar'),
+searchbar=document.getElementById('searchbar'),
+prefIn=document.getElementById('tagInput'),
+tagHolder=document.getElementById('tags'),
+list_counter=-1;
 refreshTags();
+
+function loadtaggroups(){
+    var request= getRequest();
+    
+    var params="backend/gettaggroups.php";
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("tagOptions").innerHTML=request.responseText;
+                    //console.log(request.responseText);
+                    //refreshTags();
+                    //appendChild(request.responseText);
+                                        
+                }
+            }
+        };
+}
 
 
 function loadToasterOptions(){
@@ -32,6 +55,7 @@ function loadToasterOptions(){
 };
 loadToasterOptions();
 var curuserid=0;
+var curusername= null;
 
 //getXMLHTTPrequest
 function getRequest(){
@@ -85,7 +109,9 @@ document.body.onload=function(){
 }
 
 //update sidebar and posts wrapper heights on window resize
-window.onresize=function(){
+window.onresize=updateSize;
+function updateSize()
+{
     sidebar.style.height=window.innerHeight;
     document.getElementById('wrapper').style.height=window.innerHeight;
 }
@@ -207,10 +233,12 @@ function login(){
                 if(request.responseText!="fail"){
 
                     curuserid=request.responseText;
+                    curusername=username;
                     //setusercookie(request.responseText);
                     loadtags();
                     bringmain();   
                     loadposts();
+                    loadtaggroups();
                     toastr.success('You have been logged in as ' + username + '.', 'Authentication Successful');    
                     
                 }
@@ -336,8 +364,14 @@ function popUps(){
         width:$(this).width()
     });
         $('body').append($zoomed);
-        h=window.innerHeight-100;
-        $zoomed.css({height:h+'px',width:(h/($(this).height()/$(this).width()))+'px'});
+        h=window.innerHeight-200;
+        w=(h/($(this).height()/$(this).width()));
+        if(w>window.innerWidth-400)
+            {
+                w=window.innerWidth-400;
+                h=(w/($(this).width()/$(this).height()));
+            }
+        $zoomed.css({height:h+'px',width:w+'px'});
         $zoomed.addClass('final');
         $('#main').addClass('inactive');
         $('#closePop').show(100);
@@ -363,9 +397,9 @@ function bringmain(){
     main.classList.remove('hidden-element');
     main.classList.add('shown-element');
     main.classList.add('active');
-
+    document.getElementById('usernamebar').innerHTML=curusername;
     window.setTimeout(function(){document.getElementById('open_composer').style.display='block';
-                                document.getElementById('button_drawer').style.display='block';},1000);
+    document.getElementById('button_drawer').style.display='block';},1000);
 }
 
 
@@ -410,7 +444,30 @@ function bringmain(){
     }
   }
   
-  
+  $('#tagInput').keydown(function(e){
+      if(e.keyCode==38)
+          {
+              console.log('UpItIs');
+              $('#tagOptions>li').removeClass('active');
+              $('#tagOptions>li').eq(list_counter<=0?0:--list_counter).addClass('active');
+              $('#tagOptions').scrollTop(20*list_counter);
+              $('#tagInput').val($('#tagOptions>li').eq(list_counter).html().trim());
+          }
+      if(e.keyCode==40)
+          {
+              console.log('downItIs');
+              $('#tagOptions>li').removeClass('active');
+              $('#tagOptions>li').eq(list_counter>=$('#tagOptions>li').length-1?list_counter:++list_counter).addClass('active');
+              $('#tagOptions').scrollTop(20*list_counter);
+              $('#tagInput').val($('#tagOptions>li').eq(list_counter).html().trim());
+          }
+  });
+  $('#tagInput').focus(function(){
+      $(this).parent().find('#tagOptions').show();
+  });
+$('#tagInput').blur(function(){
+      $(this).parent().find('#tagOptions').hide();
+  });
   //code to implement search
   searchbar.onkeypress=function(e){
     
@@ -577,7 +634,7 @@ function onforgotpassword(){
 function onbragclick(){
     swal({
         title: "Meet The Maths Guys",
-        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thing, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">This part is shit. I didn\'t code this.</p></div></div>',
+        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome. Loves rapping, infact made his own rap song. Coming soon on Vevo. Loves to code in C++, Java.</p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner. Cons: Addiction to shit. And MS-DOS. Same thing, basically. Little known fact: Keeps rats as pets. Loves to code in C#. Allergic to CSS.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This is SHITCODE!!</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!	Can fuck you in CSS+JS professionally. Variable transitions and positions. The only guy who can code while others in room play CS. Loves to create stuff from scratch and does it beautifully. </p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">This part is shit. I didn\'t code this.</p><p class="quote-start material-icons">format_quote</p></div></div>',
         html: true,
         animation: "slide-from-bottom",
         "confirmButtonColor": "#0097a7"

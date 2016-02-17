@@ -71,6 +71,7 @@
   <!-- popup -->
   
   <div id='search_wrapper'>
+      <div id="usernamebar">Hello World</div>
       <input id='searchbar' placeholder="Search All Posts"/>
       
       
@@ -107,7 +108,10 @@
     <div id="tags" class="tour-tags">
     </div>
     <div class='input_wrapper'>
-      <input placeholder="Add New Tag..."/>
+            <input list='tagOptions' id='tagInput' placeholder="Add New Tag..."/>
+            <div id='tagOptions'>
+                
+            </div>
     </div>
   </div>
 </div>
@@ -136,16 +140,18 @@
     </script>
     <script><?php session_start(); 
         if($_SESSION['userid']){
-        echo 'curuser="' . $_SESSION['userid'] . '";';
+        echo 'curusername="' . $_SESSION['username'] . '";';
         echo 'curuserid="' . $_SESSION['userid'] . '";';
         }?>
-        if(curuser!= undefined || usernameshit!= null){
+        if(curusername!= undefined || curusername!= null){
                     loadtags();
-                    bringmain();   
+                    bringmain(); 
+                    updateSize();
                     loadposts();
+                    loadtaggroups();
                     //toastr.success('Welcome back ' + username + '.', 'Authentication Successful');  
             // code to log out
-
+            
         }
         
     </script>

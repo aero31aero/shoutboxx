@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#script to deploy files on Apache2 Web Server
+rm -r /var/www/html/*
+cp -R /home/rohitt/Documents/shoutboxx/html/* /var/www/html/
+mv /var/www/html/shoutboxx.php /var/www/html/index.php
+if [ $? == 0 ];
+then
+	echo "Deployment Successful!"
+fi
+if [ "$1" == "valid" ]; then
+  echo "x has the value 'valid'"
+fi

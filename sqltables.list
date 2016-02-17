@@ -2,9 +2,9 @@ CREATE TABLE users ( userid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, username
 CREATE TABLE tags ( tagid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, tag VARCHAR(500) NOT NULL, make_time TIMESTAMP, isactive BOOLEAN );
 CREATE TABLE posts ( postid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, creator LONGTEXT NOT NULL, creatorid LONGTEXT NOT NULL,  message LONGTEXT NOT NULL, mid LONGTEXT NOT NULL, make_time TIMESTAMP NOT NULL, typeofpost LONGTEXT NOT NULL, created_time TIMESTAMP, ismessage BOOLEAN, fullimage LONGTEXT NOT NULL);
 CREATE TABLE bookmarks ( bookid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, postid INT(6) NOT NULL, make_time TIMESTAMP NOT NULL );
-CREATE TABLE logs ( logid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, postid INT(6), tagid INT(6), make_time TIMESTAMP NOT NULL, message LONGTEXT NOT NULL);
-CREATE TABLE feedbacks ( feedbackid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, feedback LONGTEXT NOT NULL);
-
+CREATE TABLE logs ( logid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, postid INT(6), tagid INT(6), make_time TIMESTAMP NOT NULL, message LONGTEXT NOT NULL );
+CREATE TABLE feedbacks ( feedbackid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userid INT(6) NOT NULL, feedback LONGTEXT NOT NULL );
+CREATE TABLE grouptags ( grouptagid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, maintag VARCHAR(200) NOT NULL, subtag LONGTEXT NOT NULL );
 <div id="popup" class="popup">
   <p> Add filters </p> 
   <button type="popbutt" class="popbutt">okay got it</button>
