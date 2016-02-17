@@ -1,8 +1,8 @@
 <?php
 require_once 'configuration.php';
-set_time_limit(99999999);
+set_time_limit(900000);
 ini_set('memory_limit', "9999M");
-echo "Script to download group posts. Please be patient. <br>";
+//echo "Script to download group posts. Please be patient. <br>";
 
  
 try {
@@ -72,7 +72,7 @@ while($numberofpagesdone != $numberofpages){
             VALUES ('$messageshit', '$midshit', '$createdtime' ,'$creatorname','$creatorid','$typeshit','$ismessage','$fullimage')";
 
             if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully<br>";
+                echo "New record created successfully for post created by " . $creatorname . ".<br>";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

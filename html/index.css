@@ -898,6 +898,13 @@ div.button:active
     position: fixed;
     bottom:25px;
     right:15px;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+    padding-right: 0px;
+    padding-left: 25px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.24);
+    z-index: 102;
 }
 #button_drawer>div.button
 {
@@ -916,5 +923,4 @@ div.button:active
 
 .shown-element{
     display: block;
-}
 }

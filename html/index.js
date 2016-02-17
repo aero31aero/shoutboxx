@@ -10,9 +10,9 @@ tagHolder=document.getElementById('tags');
 refreshTags();
 
 
-
 function loadToasterOptions(){
-  toastr.options = {
+
+    toastr.options = {
   "closeButton": false,
   "debug": false,
   "newestOnTop": true,
@@ -49,6 +49,7 @@ function onPostLoad(){
         
         posts[i].onmouseover=function(){
             this.classList.add('active');
+             $(posts[i]).tooltipster('show');
             
         }
         posts[i].onmouseout=function(){
@@ -57,7 +58,8 @@ function onPostLoad(){
     }
     scrollable=document.getElementById('scrollable');
     scrollable.scrollTo(0,0);
-}
+    
+};
 
 //function for signup dialog box to open
 toggle.onclick=function(){
@@ -69,7 +71,7 @@ toggle.onclick=function(){
 close.onclick=function(){
     container.classList.remove('active');
     //toggle.innerHTML="&#9998;";
-    toggle.innerHTML="add";
+    toggle.innerHTML="person_add";
 }
 
 //set sidebar height to window height
@@ -118,7 +120,7 @@ function register(){
                     toastr.success('You have been registered as ' + username + '.', 'Registration Successful');
                     container.classList.remove('active');
                     //toggle.innerHTML="&#9998;";
-                    toggle.innerHTML="add";               
+                    toggle.innerHTML="person_add";               
                     document.getElementById('Username').value=username;
                 }
                 if(request.responseText=="fail"){
@@ -128,7 +130,7 @@ function register(){
     //                          type: "error",
     //                          confirmButtonText: "Okay!"
     //                        });
-                        toastr.error('This username or Bits id is already taken.', 'Username or ID Taken');
+                        toastr.error('This username is already taken.', 'Username Taken');
                     }
                 }
             }
@@ -182,6 +184,13 @@ function onpasspress(e){
 
         return false;
 }
+function onpasspress2(e){
+    if(e.keyCode === 13){
+            register();
+        }
+
+        return false;
+}
 function login(){
     var request= getRequest();  
     var username=document.getElementById('Username').value;    
@@ -193,15 +202,17 @@ function login(){
     request.setRequestHeader("Connection","close");
     request.send();   
     request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {                
+        
+            if (request.readyState == 4 && request.status == 200) {              
                 if(request.responseText!="fail"){
-                    
+
                     curuserid=request.responseText;
                     //setusercookie(request.responseText);
                     loadtags();
-                    bringmain();                    
+                    bringmain();   
                     loadposts();
-                    toastr.success('You have been logged in as ' + username + '.', 'Authentication Successful');
+                    toastr.success('You have been logged in as ' + username + '.', 'Authentication Successful');    
+                    
                 }
                 else{
                     toastr.error('Please check your username and password.', 'Authentication Failed');
@@ -209,6 +220,7 @@ function login(){
             } 
         };
 }
+
 /*function setusercookie(var userid){
     document.cookie="userid=" + userid;
 }
@@ -284,10 +296,11 @@ function loadallposts(){
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){                    
-                    console.log(request.responseText+" HELLO");
+                    //console.log(request.responseText+" HELLO");
                     loadtags();
                     loadposts();
                     toastr.success('Remove the \'all-posts\' tag when done.', 'Showing All Posts');
+
                 }
             }
         };
@@ -309,6 +322,7 @@ var images=document.getElementsByClassName('image-link');
     }*/
 
 function popUps(){
+    console.log("Here I am");
     $('.image-link>img').click(function(){
     $popped=$(this);
     $zoomed=$(this).clone();
@@ -329,8 +343,10 @@ function popUps(){
         $('#closePop').show(100);
         $('#overlay').css({display:'block'});
     });
+    console.log("This is me");
 };
 $('#closePop').click(function(){
+    console.log("There's nowhere else on earth I'd rather be.");
     $('.popUp').remove();
     $('#main').removeClass('inactive');
     $popped.css({opacity:1});
@@ -347,10 +363,9 @@ function bringmain(){
     main.classList.remove('hidden-element');
     main.classList.add('shown-element');
     main.classList.add('active');
-    
+
     window.setTimeout(function(){document.getElementById('open_composer').style.display='block';
                                 document.getElementById('button_drawer').style.display='block';},1000);
-            
 }
 
 
@@ -539,4 +554,35 @@ function logout(){
     }
 }
 
+function onsettingsclick(){
+    swal({
+        title: "Settings",
+        text: 'This part is under development. Its a Beta, afterall.',
+        html: true,
+        animation: "slide-from-bottom"
+});
+    document.getElementById('test').innerHTML = '';
+}
+
+function onforgotpassword(){
+    swal({
+        title: "Password Recovery",
+        text: 'This part is under development. You\'re on your own! :P Better go create a new account for now.',
+        html: true,
+        animation: "slide-from-bottom"
+});
+    document.getElementById('test').innerHTML = '';
+}
+
+function onbragclick(){
+    swal({
+        title: "Meet The Maths Guys",
+        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thing, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">This part is shit. I didn\'t code this.</p></div></div>',
+        html: true,
+        animation: "slide-from-bottom",
+        "confirmButtonColor": "#0097a7"
+});
+    //document.getElementById('test').innerHTML = '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thing, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div>';
+    
+};
 // session management

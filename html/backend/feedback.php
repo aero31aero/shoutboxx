@@ -17,6 +17,10 @@ VALUES ( '$userid' , '$feedback');";
 //echo $sql . "<br>";
 if ($conn->query($sql) === TRUE) {
     echo "success";
+    $sql = "INSERT INTO logs (userid,message) 
+            VALUES ( '$userid' , 'FEEDBACK' );";
+    	    //echo $sql . "<br>";
+            $conn->query($sql);
 } else {
     echo "fail";
 }

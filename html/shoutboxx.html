@@ -1,15 +1,13 @@
-
 <html>
 <head>
     <link rel="icon" 
       type="image/png" 
       href="favicon.png">
   <title>SBX Headset</title>
-  
+    
 </head>
-<link rel="stylesheet" type="text/css" href="index.css">
-        
-    <link rel="stylesheet" href="/libraries/random/css/shepherd-theme-arrows.css" />
+<link rel="stylesheet" type="text/css" href="index.css"/>
+<link href="libraries/random/css/bootstrap-tour-standalone.min.css" rel="stylesheet"/>
 
 
 <body>
@@ -36,7 +34,7 @@
       <div class="button-container">
         <button><span>Login</span></button>
       </div>
-      <div class="footer" onclick="alert('Well, you are fucked!')"><a href="#">Forgot your password?</a></div>
+      <div class="footer" onclick="onforgotpassword()"><a href="#">Forgot your password?</a></div>
     
   </div>
   <div class="card alt">
@@ -46,17 +44,17 @@
     </h1>
     
       <div class="input-container">
-        <input type="text" id="name" required="required"/>
+        <input type="text" onkeypress="onpasspress2(event)" id="name" required="required"/>
         <label for="Name">Username</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="text" id="bitsid" required="required"/>
+        <input type="text" onkeypress="onpasspress2(event)" id="bitsid" required="required"/>
         <label for="BITS Id">BITS Id (f20*****)</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="password" pattern=".{8,20}" required="required" requiredtitle="Your password should lie between 8 to 20 characters."/>
+        <input type="password" onkeypress="onpasspress2(event)" id="password" pattern=".{8,20}" required="required" requiredtitle="Your password should lie between 8 to 20 characters."/>
         <label for="Password">Password</label>
         <div class="bar"></div>
       </div>
@@ -87,9 +85,11 @@
   </div>
   </div>
     <div id='button_drawer'>
-        <div class="button inactive material-icons" id='open_composer' title="Give Feedback">feedback</div>              
-        <div class="button material-icons rotated" onclick="loadallposts()" title="Show All Posts">last_page</div> 
-        <div class="button material-icons" onclick="logout()" title="Logout">power_settings_new</div>
+        <div class="button tooltip b-about-us material-icons" title="About Us Stupid Version" onclick="onbragclick()" >contacts</div> 
+        <div class="button tooltip b-feedback inactive material-icons" id='open_composer' title="Give Feedback">feedback</div> 
+        <div class="button tooltip b-settings material-icons" title="Account Settings" onclick="onsettingsclick()">settings</div> 
+        <div class="button tooltip b-all-posts material-icons rotated" onclick="loadallposts()" title="Show All Posts">last_page</div> 
+        <div class="button tooltip b-logout material-icons" onclick="logout()" title="Logout">power_settings_new</div>
     </div>
   <div id='compose'>
     <div class="composer" id='composer'>
@@ -104,7 +104,7 @@
   </div>
   <div id='sidebar'>
   <h3>Active Tags</h3>
-    <div id="tags">
+    <div id="tags" class="tour-tags">
     </div>
     <div class='input_wrapper'>
       <input placeholder="Add New Tag..."/>
@@ -114,15 +114,27 @@
 <div id='overlay'></div>
 <div id='closePop'><i class='material-icons'>close</i></div>
     
-<script type="text/javascript" src="libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="libraries/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="libraries/toastr.min.css">
-<script src="libraries/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="libraries/sweetalert.css">
-    <script src="libraries/materialize.min.js"></script>
-
-<script type="text/javascript" src="index.js"></script>
-    <script src="/libraries/random/js/tether.js"></script>
-    <script src="/libraries/random/js/shepherd.js"></script>
+    <script type="text/javascript" src="libraries/toastr.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="libraries/tooltipster.css">
+    <script type="text/javascript" src="libraries/tooltipster.min.js"></script>
+    <script src="libraries/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="libraries/sweetalert.css">   
+    <script src="/libraries/random/js/bootstrap-tour-standalone.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.tooltip').tooltipster({
+            animation: 'grow',
+            delay: 10,
+            theme: 'tooltipster-default',
+            touchDevices: false,
+            trigger: 'hover'
+            });
+        });
+    </script>
+    
 
 </body>
 
