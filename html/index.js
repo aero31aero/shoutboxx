@@ -7,7 +7,9 @@ sidebar=document.getElementById('sidebar'),
 searchbar=document.getElementById('searchbar'),
 prefIn=document.getElementById('tagInput'),
 tagHolder=document.getElementById('tags'),
-list_counter=-1;
+list_counter=-1,
+    retainTagOptions=0,
+    groupTagHolder=null;
 refreshTags();
 
 function loadtaggroups(){
@@ -23,6 +25,7 @@ function loadtaggroups(){
             if (request.readyState == 4 && request.status == 200) {                
                 if(request.responseText!="fail"){
                     document.getElementById("tagOptions").innerHTML=request.responseText;
+                    groupTagHolder=request.responseText;
                     //console.log(request.responseText);
                     //refreshTags();
                     //appendChild(request.responseText);
@@ -81,7 +84,9 @@ function onPostLoad(){
         }
     }
     scrollable=document.getElementById('scrollable');
-    scrollable.scrollTo(0,0);
+    /*scrollable.scrollTo(0,0);*/
+    scrollable.scrollTop=0;
+    popUps();
     
 };
 
@@ -103,7 +108,8 @@ sidebar.style.height=window.innerHeight;
 
 //set the posts wrapper height to window height
 document.body.onload=function(){
-    window.scrollTo(0,0);
+    /*window.scrollTo(0,0);*/
+    window.scrollTop=0;
     sidebar.style.height=window.innerHeight;
     document.getElementById('wrapper').style.height=window.innerHeight; 
 }
@@ -301,9 +307,8 @@ function loadposts(){
                 if(request.responseText!="fail"){
                     document.getElementById("post_wrapper").innerHTML=request.responseText;
                     onPostLoad();
-                    popUps();
-                    //appendChild(request.responseText);
-                                        
+            
+                    //appendChild(request.responseText);                   
                 }
             }
         };
@@ -328,8 +333,10 @@ function loadallposts(){
                     loadtags();
                     loadposts();
                     toastr.success('Remove the \'all-posts\' tag when done.', 'Showing All Posts');
-
                 }
+                else{
+                        toastr.error('The tag \'all-posts\' already exists.', 'Tag Exists');
+                    }
             }
         };
     
@@ -348,7 +355,11 @@ var images=document.getElementsByClassName('image-link');
             zoomed.style.width=this.clientW;
         }
     }*/
-
+function ongrouptagclick()
+    {
+    addTag('Hello');
+    $('#tagInput').focus();
+    }
 function popUps(){
     console.log("Here I am");
     $('.image-link>img').click(function(){
@@ -408,13 +419,18 @@ function bringmain(){
   prefIn.onkeypress=function(e){
     if( e.keyCode==13 )
     {
-        if(this.value!="" && this.value!=" "){
+        addTag(this.value);
+        this.value="";
+    }
+  }
+  function addTag(tagValue)
+{
+    if(tagValue!="" && tagValue!=" "){
             
         
             var request= getRequest();
-            var params="backend/addtag.php?userid="+curuserid+"&tag=" + this.value ;
-            var valueoftag=this.value;
-            this.value="";
+            var params="backend/addtag.php?userid="+curuserid+"&tag=" + tagValue ;
+            var valueoftag=tagValue;
             //alert(valueoftag);
             request.open("POST",params,true);
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -429,6 +445,9 @@ function bringmain(){
                         loadposts(); 
                         toastr.success('Added new tag \'' + valueoftag +'\'.', 'Tag Added');
                     }
+                    else{
+                        toastr.error('The tag \'' + valueoftag +'\' already exists.', 'Tag Exists');
+                    }
                 }
             };
     //        var newTag=document.createElement('li');
@@ -441,10 +460,13 @@ function bringmain(){
         else{
             toastr.error('Please chack the tag content', 'Invalid Tag');
         }
-    }
-  }
-  
-  $('#tagInput').keydown(function(e){
+}
+function addThisTag(x)
+{
+    addTag(x.innerHTML.trim());
+    $('#tagInput').focus();
+}
+$('#tagOptions').keydown(function(e){
       if(e.keyCode==38)
           {
               console.log('UpItIs');
@@ -465,7 +487,15 @@ function bringmain(){
   $('#tagInput').focus(function(){
       $(this).parent().find('#tagOptions').show();
   });
+$('#tagOptions').mouseover(function(){
+    retainTagOptions=0;
+    console.log(retainTagOptions);
+});
+$('#tagOptions').mouseout(function(){
+    retainTagOptions=1;
+});
 $('#tagInput').blur(function(){
+    if(retainTagOptions)
       $(this).parent().find('#tagOptions').hide();
   });
   //code to implement search
@@ -610,15 +640,16 @@ function logout(){
             }
     }
 }
-
 function onsettingsclick(){
     swal({
-        title: "Settings",
-        text: 'This part is under development. Its a Beta, afterall.',
+        title: "Common Tags",
+        text: '<div id="tagOptions" tabindex="1">'+groupTagHolder+'</div>',
         html: true,
-        animation: "slide-from-bottom"
+        animation: "slide-from-bottom",
+        "confirmButtonColor": "#0097a7"
 });
-    document.getElementById('test').innerHTML = '';
+    loadtaggroups();
+    $('#tagOptions').focus();
 }
 
 function onforgotpassword(){
@@ -626,7 +657,8 @@ function onforgotpassword(){
         title: "Password Recovery",
         text: 'This part is under development. You\'re on your own! :P Better go create a new account for now.',
         html: true,
-        animation: "slide-from-bottom"
+        animation: "slide-from-bottom",
+        "confirmButtonColor": "#0097a7"
 });
     document.getElementById('test').innerHTML = '';
 }
@@ -634,12 +666,13 @@ function onforgotpassword(){
 function onbragclick(){
     swal({
         title: "Meet The Maths Guys",
-        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome. Loves rapping, infact made his own rap song. Coming soon on Vevo. Loves to code in C++, Java.</p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner. Cons: Addiction to shit. And MS-DOS. Same thing, basically. Little known fact: Keeps rats as pets. Loves to code in C#. Allergic to CSS.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This is SHITCODE!!</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!	Can fuck you in CSS+JS professionally. Variable transitions and positions. The only guy who can code while others in room play CS. Loves to create stuff from scratch and does it beautifully. </p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">This part is shit. I didn\'t code this.</p><p class="quote-start material-icons">format_quote</p></div></div>',
+        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Loves Linux. Terminal Addict, GUI-phobic. Says GUI is too cumbersome.</p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">Only with root can true pain be achieved.</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner. Cons: Addiction to shit. And MS-DOS. Same thing, basically. Allergic to CSS.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This is SHITCODE!!</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God! Loves to create stuff from scratch and does it beautifully. </p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This part is shit. I didn\'t code this.</p><p class="quote-start material-icons">format_quote</p></div></div>',
         html: true,
         animation: "slide-from-bottom",
         "confirmButtonColor": "#0097a7"
 });
-    //document.getElementById('test').innerHTML = '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thing, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div>';
+    //document.getElementById('test').innerHTML = '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thig, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div>';
     
 };
+// session management
 // session management

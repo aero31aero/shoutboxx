@@ -10,6 +10,13 @@ try {
 
 $tag=mysql_escape_string($_GET['tag']);
 $userid=mysql_escape_string($_GET['userid']);
+$sqlcheck = "SELECT * FROM tags WHERE tag='$tag' AND isactive='1' AND userid='" . $userid . "';";
+$resulttag = $conn->query($sqlcheck);
+$rowcount = mysqli_num_rows($resulttag);
+if($rowcount>=1){
+    echo "fail";
+}
+else{
 $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $userid , '$tag', 1 );";
 
 if ($conn->query($sql) === TRUE) {
@@ -35,6 +42,7 @@ if ($conn->query($sql) === TRUE) {
     } 
 } else {
     echo "fail";
+}
 }
         
    

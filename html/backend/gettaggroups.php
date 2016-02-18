@@ -22,7 +22,7 @@ if( $num_row >=1 ) {
     //$_SESSION['user_name']=$username;
     
     while($tag_row = mysqli_fetch_array($result)) {
-        echo "<li>" . $tag_row['maintag'] . "</li>";
+        echo "<li onclick=addThisTag(this)>" . $tag_row['maintag'] . "</li>";
     }
     
 }

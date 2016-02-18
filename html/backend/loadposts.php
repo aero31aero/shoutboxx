@@ -1,8 +1,13 @@
 <?php
 //session_start();
 require_once 'configuration.php';
-require_once 'grouptags.php';
+//require_once 'grouptags.php';
 $limit=50;
+
+
+
+
+
 try {   
     $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
     
@@ -24,6 +29,10 @@ if( $num_row >=1 ) {
     //$_SESSION['user_name']=$username;
     
     while($tag_row = mysqli_fetch_array($result)) {
+        
+        
+        
+        
         $tagarray[$tagcount]=$tag_row['tag'];
         //echo $tagarray[$tagcount];
         $tagcount=$tagcount + 1;        
@@ -32,24 +41,24 @@ if( $num_row >=1 ) {
    
     
 }
-else{
-   
-}  
-
-
 $sql = "SELECT postid,mid,creator,message,created_time+ interval 30 minute + interval 5 hour as created_time,fullimage FROM posts WHERE (";
 $arrlength = count($tagarray);
 for($x = 0; $x < $arrlength-1; $x++) {
     //exception-handling-for-tags
-while($row2 = mysql_fetch_array($result)){
-        $tagsql = "SELECT subtag FROM grouptags WHERE maintag='" . $row2['tag'] . "';";
-        $resultfortags =$conn->query($tagsql);
-        while ($row = mysql_fetch_array($resultsfortags)) {
-            $sql = $sql . "message LIKE '%" . $cleanedtag . "%' OR ";
+    if(strcmp(substr($tagarray[$x], -4),"-all")==0){
+        $sql1="select subtag from grouptags where maintag='" . $tagarray[$x] . "';";
+        $result =$conn->query($sql1);
+        $num_row = mysqli_num_rows($result);
+        if( $num_row ==0 ){            
         }
+        else{
+                while($tag_row2 = mysqli_fetch_array($result)) {
+                    $sql= $sql . "message LIKE '% ". $tag_row2['subtag'] . " %' OR "; 
+                    $sql= $sql . "message LIKE '". $tag_row2['subtag'] . " %' OR ";
+                }
+        }   
 
     }
-}
     if(strcmp($tagarray[$x],"all-posts")==0){
         
         $sql= $sql . "message LIKE '%' OR ";
@@ -61,19 +70,20 @@ while($row2 = mysql_fetch_array($result)){
 
 
 //exception-handling-for-tags
-$arrman = count($arraystorage);
-    if(strcmp($tagarray[$arrlength-1],"clubs-all")==0){
-        
-        $tagsql = "SELECT subtag FROM grouptags WHERE maintag=clubs-all;";
-        $resultfortags =$conn->query($tagsql);
-        while ($row = mysql_fetch_array($resultsfortags)) {
-            $sql = $sql . "message LIKE '%" . $cleanedtag . "%' OR ";
+    if(strcmp(substr($tagarray[$arrlength-1], -4),"-all")==0){
+        $sql1="select subtag from grouptags where maintag='" . $tagarray[$arrlength-1] . "';";
+        $result =$conn->query($sql1);
+        $num_row = mysqli_num_rows($result);
+        if( $num_row ==0 ){            
         }
-        
+        else{
+                while($tag_row2 = mysqli_fetch_array($result)) {
+                    $sql= $sql . "message LIKE '% ". $tag_row2['subtag'] . " %' OR ";   
+                    $sql= $sql . "message LIKE '". $tag_row2['subtag'] . " %' OR ";  
+                }
+        } 
     }
-
-//!:S
-if(strcmp($tagarray[$x],"all-posts")==0){
+    if(strcmp($tagarray[$arrlength-1],"all-posts")==0){
         
         $sql= $sql . "message LIKE '%' OR ";
         $limit=100;
@@ -84,7 +94,7 @@ if($userid!=0){
     $sql = $sql . "LIMIT " . $limit . ";";
 }
         //echo $sql;
-        
+       // echo "$sql";
         $result1 =$conn->query($sql);
 
         $num_row=0;
@@ -114,6 +124,7 @@ if($userid!=0){
             
             
         }
+    //echo $sql;
  echo $output;
 
    
@@ -166,6 +177,10 @@ for($x = 0; $x < $arrlength-1; $x++) {
         $sql= $sql . "message LIKE '%quiz club%' OR ";
         $sql= $sql . "message LIKE '%dramatics club%' OR ";
     }-->*/
+
+    f
+
+
 ?>
 
 

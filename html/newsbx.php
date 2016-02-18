@@ -86,7 +86,7 @@
   </div>
   </div>
     <div id='button_drawer'>
-        <div class="button tooltip b-about-us material-icons" title="About Us Stupid Version" onclick="onbragclick()" >contacts</div> 
+        <div class="button tooltip b-about-us material-icons" title="About Us" onclick="onbragclick()" >contacts</div> 
         <div class="button tooltip b-feedback inactive material-icons" id='open_composer' title="Give Feedback">feedback</div> 
         <div class="button tooltip b-settings material-icons" title="Account Settings" onclick="onsettingsclick()">settings</div> 
         <div class="button tooltip b-all-posts material-icons rotated" onclick="loadallposts()" title="Show All Posts">last_page</div> 
@@ -109,9 +109,6 @@
     </div>
     <div class='input_wrapper'>
             <input list='tagOptions' id='tagInput' placeholder="Add New Tag..."/>
-            <div id='tagOptions'>
-                
-            </div>
     </div>
   </div>
 </div>

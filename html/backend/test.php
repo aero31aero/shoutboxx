@@ -32,7 +32,7 @@ function fetchUrl($url) {
 
 $url = "https://graph.facebook.com/$groupid/feed/?access_token=$accesstoken&fields=id,from,created_time,message,message_tags,type,story,status_type,full_picture";
 //echo $url . '</br>';
-$numberofpages = 5;
+$numberofpages = 3;
 $numberofpagesdone = 0;
 while($numberofpagesdone != $numberofpages){
     $json = fetchUrl($url);
