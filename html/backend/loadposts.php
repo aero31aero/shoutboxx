@@ -104,7 +104,8 @@ if($userid!=0){
             //$_SESSION['user_name']=$username;
 
             while($post_row = mysqli_fetch_array($result1)) {                
-                $output=$output. "<li class='post' postid=" . $post_row['postid'] . "><div class='tooltip options'><span onclick=\"window.open('https://www.facebook.com/" . $post_row['mid'] . "'); return false;\" title='Open in Facebook'><i class='material-icons'>reply_all</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
+                $getpostid = explode("_",$post_row['mid']);
+                $output=$output. "<li class='post' postid=" . $post_row['postid'] . "><div class='tooltip options'><span onclick=\"window.open('https://www.facebook.com/groups/" . $getpostid[0] . "/permalink/". $getpostid[1] . "','_blank'); return false;\" title='Open in Facebook'><i class='material-icons'>reply_all</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
                 if($post_row['fullimage']!=NULL){
                    /*  
    <img src="thumbnails.jpg" />

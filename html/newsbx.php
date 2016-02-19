@@ -3,7 +3,7 @@
     <link rel="icon" 
       type="image/png" 
       href="favicon.png">
-  <title>SBX Headset</title>
+  <title>The BPHC Wall</title>
     
 </head>
 <link rel="stylesheet" type="text/css" href="index.css"/>
@@ -19,22 +19,24 @@
 <div class="container">
   <div class="card"></div>
   <div class="card">
-    <h1 class="title">SBX Headset</h1>
+    <h1 class="title">The BPHC Wall</h1>
     
       <div class="input-container">
-        <input type="text" id="Username" required="required" onkeypress="onpasspress(event)"/>
+        <input type="text" id="Username" onkeypress="onpasspress(event)"/>
         <label for="Username">Username</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="Password" required="required" onkeypress="onpasspress(event)"/>
+        <input type="password" id="Password" onkeypress="onpasspress(event)"/>
         <label for="Password">Password</label>
         <div class="bar"></div>
       </div>
       <div class="button-container">
         <button><span>Login</span></button>
       </div>
-      <div class="footer" onclick="onforgotpassword()"><a href="#">Forgot your password?</a></div>
+      <div class="footer" onclick="openfaq()"><a href="#">WHAT IS THIS?</a>
+          </div>
+
     
   </div>
   <div class="card alt">
@@ -44,17 +46,17 @@
     </h1>
     
       <div class="input-container">
-        <input type="text" onkeypress="onpasspress2(event)" id="name" required="required"/>
+        <input type="text" onkeypress="onpasspress2(event)" id="name" />
         <label for="Name">Username</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="text" onkeypress="onpasspress2(event)" id="bitsid" required="required"/>
+        <input type="text" onkeypress="onpasspress2(event)" id="bitsid"/>
         <label for="BITS Id">BITS Id (f20*****)</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" onkeypress="onpasspress2(event)" id="password" pattern=".{8,20}" required="required" requiredtitle="Your password should lie between 8 to 20 characters."/>
+        <input type="password" onkeypress="onpasspress2(event)" id="password" pattern=".{8,20}" />
         <label for="Password">Password</label>
         <div class="bar"></div>
       </div>
@@ -72,6 +74,8 @@
   
   <div id='search_wrapper'>
       <div id="usernamebar">Hello World</div>
+      <div id="appnamebar">The BPHC Wall</div>
+    <div id="usernamebar" class="toggle material-icons" onclick="openfaq();">help_outline</div>
       <input id='searchbar' placeholder="Search All Posts"/>
       
       
@@ -88,7 +92,7 @@
     <div id='button_drawer'>
         <div class="button tooltip b-about-us material-icons" title="About Us" onclick="onbragclick()" >contacts</div> 
         <div class="button tooltip b-feedback inactive material-icons" id='open_composer' title="Give Feedback">feedback</div> 
-        <div class="button tooltip b-settings material-icons" title="Account Settings" onclick="onsettingsclick()">settings</div> 
+        <div class="button tooltip b-settings material-icons" title="Common Tags" onclick="onsettingsclick()">settings</div> 
         <div class="button tooltip b-all-posts material-icons rotated" onclick="loadallposts()" title="Show All Posts">last_page</div> 
         <div class="button tooltip b-logout material-icons" onclick="logout()" title="Logout">power_settings_new</div>
     </div>

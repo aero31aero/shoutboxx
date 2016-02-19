@@ -953,6 +953,13 @@ div.button:active
     border-bottom: none;
     padding-bottom: 0px;
 }
+#about-us>.mainimg{
+    display: inline-block;
+    vertical-align: top;
+    box-shadow:0px 0px 1px rgba(0,0,0,0.5);
+    border-radius: 50%;
+    width: 25%;
+}
 #about-us>img{
     display: inline-block;
     vertical-align: top;
@@ -1013,6 +1020,16 @@ div.button:active
     background:rgba(0, 0, 0, 0.1) none repeat scroll 0% 0%;
     float: right;
 }
+#appnamebar
+{
+    display: inline-block;
+    vertical-align: text-bottom;
+    line-height: 60px;
+    padding: 0px 20px;
+    color: white;
+    background:rgba(0, 0, 0, 0.1) none repeat scroll 0% 0%;
+    float: left;
+}
 #tagOptions
 {
     position: relative;
@@ -1035,4 +1052,21 @@ div.button:active
 #tagOptions>li:active
 {
     background:rgba(0,0,0,0.1);
+}
+
+.question{
+	font-weight: 600 !important;
+	padding-top: 15px !important;
+}
+.answer{
+	
+}
+
+.question:first-child{
+	padding-top: 0px !important;
+}
+
+.faqholder{
+	max-height: 500px;
+	overflow-y: scroll;
 }

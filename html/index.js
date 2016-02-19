@@ -11,6 +11,9 @@ list_counter=-1,
     retainTagOptions=0,
     groupTagHolder=null;
 refreshTags();
+document.getElementById('name').value="";
+    document.getElementById('bitsid').value="";
+    document.getElementById('password').value="";
 
 function loadtaggroups(){
     var request= getRequest();
@@ -94,6 +97,7 @@ function onPostLoad(){
 toggle.onclick=function(){
     container.classList.add('active');
     toggle.innerHTML="";
+    
 }
 
 //function for signup dialog box to close
@@ -171,7 +175,7 @@ function register(){
 }
 function validatereg(username,bitsid,password){
        var nameRegex = /^[a-zA-Z\-\d]+$/;
-    var bitsidRegex = /(f20)\d{5}/g;
+    var bitsidRegex = /[fh](20)\d{5}/g;
     var validfirstUsername = username.match(nameRegex);
     var validbitsid = bitsid.match(bitsidRegex);
     if(validfirstUsername == null){
@@ -408,7 +412,7 @@ function bringmain(){
     main.classList.remove('hidden-element');
     main.classList.add('shown-element');
     main.classList.add('active');
-    document.getElementById('usernamebar').innerHTML=curusername;
+    document.getElementById('usernamebar').innerHTML="Logged in as: "+ curusername;
     window.setTimeout(function(){document.getElementById('open_composer').style.display='block';
     document.getElementById('button_drawer').style.display='block';},1000);
 }
@@ -665,14 +669,113 @@ function onforgotpassword(){
 
 function onbragclick(){
     swal({
-        title: "Meet The Maths Guys",
-        text: '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Loves Linux. Terminal Addict, GUI-phobic. Says GUI is too cumbersome.</p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">Only with root can true pain be achieved.</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner. Cons: Addiction to shit. And MS-DOS. Same thing, basically. Allergic to CSS.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This is SHITCODE!!</p><p class="quote-start material-icons">format_quote</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God! Loves to create stuff from scratch and does it beautifully. </p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This part is shit. I didn\'t code this.</p><p class="quote-start material-icons">format_quote</p></div></div>',
+        title: "The Maths Guys And The Lion",
+        text: '<div class="about-us" id="about-us"><img class="mainimg" src="nischay.jpg" onclick="onnischayclick();"></img><img class="mainimg" src="abhilash.jpg" onclick="onabhilashclick();"></img><img class="mainimg" src="soni.jpg" onclick="onsoniclick();"></img><img class="mainimg" src="rohitt.jpg" onclick="onrohittclick();"></img></div>',
         html: true,
         animation: "slide-from-bottom",
         "confirmButtonColor": "#0097a7"
 });
+}
+
+function onrohittclick()
+    {
+        swal({
+          title: "The One Who Linked It All",
+          text: '<div class="about-us" id="about-us"><img src="rohitt.jpg" onclick="onrohitclick();"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Loves Linux. Terminal Addict, GUI-phobic. Says GUI is too cumbersome.</p>	<p class="begin quote-start material-icons">format_quote</p><p class="quote">Only with root can true pain be achieved.</p><p class="quote-start material-icons">format_quote</p></div></div>',
+          showCancelButton: true,
+          confirmButtonColor: "#0097a7",
+          confirmButtonText: "Okay!",
+          cancelButtonText: "Go back",
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          animation: "slide-from-bottom",
+          html: true
+},
+function(isConfirm){
+  if (isConfirm) {
+      swal.close();
+  } else {
+          onbragclick();
+  }
+});
+    }
+function onnischayclick()
+    {
+        swal({
+          title: "The Golden Data Retriever",
+          text: '<div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner. Cons: Addiction to shit and MS-DOS. Same thing, basically. Allergic to CSS.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This is SHITCODE!!</p><p class="quote-start material-icons">format_quote</p></div>',
+          showCancelButton: true,
+          confirmButtonColor: "#0097a7",
+          confirmButtonText: "Okay!",
+          cancelButtonText: "Go back",
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          animation: "slide-from-bottom",
+          html: true
+},
+function(isConfirm){
+  if (isConfirm) {
+      swal.close();
+  } else {
+          onbragclick();
+  }
+});
+    }
+function onabhilashclick()
+    {
+        swal({
+          title: "The God Of Designs",
+          text: '<div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God! Loves to create stuff from scratch and does it beautifully. </p><p class="begin quote-start material-icons">format_quote</p><p class="quote">This part is shit. I didn\'t code this.</p><p class="quote-start material-icons">format_quote</p></div>',
+          showCancelButton: true,
+          confirmButtonColor: "#0097a7",
+          confirmButtonText: "Okay!",
+          cancelButtonText: "Go back",
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          animation: "slide-from-bottom",
+          html: true
+},
+function(isConfirm){
+  if (isConfirm) {
+      swal.close();
+  } else {
+          onbragclick();
+  }
+});
+    }
+function onsoniclick()
+    {
+        swal({
+          title: "The Supreme Tester And Planner",
+          text: '<div class="about-us" id="about-us"><img src="soni.jpg"></img><div class="content">	<p class="name">Subham Soni</p>	<p class="desc">Generates bug reports faster than you can follow. The best tester any team could get.</p><p class="begin quote-start material-icons">format_quote</p><p class="quote">I got 99 problems, but a bug ain\'t one.</p><p class="quote-start material-icons">format_quote</p></div>',
+          showCancelButton: true,
+          confirmButtonColor: "#0097a7",
+          confirmButtonText: "Okay!",
+          cancelButtonText: "Go back",
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          animation: "slide-from-bottom",
+          html: true
+},
+function(isConfirm){
+  if (isConfirm) {
+      swal.close();
+  } else {
+          onbragclick();
+  }
+});
+    }
+function openfaq(){
+    swal({
+       title: "FAQ",
+        text: '<div class="faqholder"><p class="question">What is this?</p><p class="anwser">The BPHC Wall is a way for everyone to get customised feeds from FB Groups like "Free Expressions Group" via the intranet. You can view every post on the group, or (if you want to) only posts on topics you like.</p><p class="question">Does it consume my data?</p><p class="anwser">No. Its all over the Intranet so does not consume any data. The only data needed is for us to download everything once to our database.</p><p class="question">Does it access posts from Shoutboxx?</p><p class="anwser">No. Right now, it only covers "Free Expression Group". For running the tool on a given group, we need admin access to that group. The only way we can add Shoutboxx or any other group is if one of the admins adds us. (We promise to be nice)</p><p class="question">How do I use this ?</p><p class="anwser">You need to register and login first. Once you have done so, you can decide to view a feed of selected topics (by using tags) or see all posts ("See all posts" button at the bottom).</p><p class="question">What are tags?</p><p class="anwser">Tags are basically the topics on which you want to see posts on. So if you want to see all posts of club inductions and Pearl, you add the tags"inductions" and "Pearl". That way, you get to see a feed of all the posts you want to see. You can also select any of the commonly used tags ("Common tags" button at the bottom).</p><p class="question">What else can this do?</p><p class="anwser">All your preferred tags are stored so you can login again to see new posts (this updates every 10 minutes). For viewing a post on FB, just follow the link here. Right now thats mostly it, but more functionality can be added on demand. Do let us know how it is! (Use the "Feedback" button at the bottom)</p></div>',
+        html: true,
+        animation: "slide-from-bottom",
+        confirmButtonColor: "#0097a7"
+        
+    });
+}
     //document.getElementById('test').innerHTML = '<div class="about-us" id="about-us"><img src="rohitt.jpg"></img><div class="content">	<p class="name">Rohitt Vashishtha</p>	<p class="desc">Hates Windows, Loves Linux.<br>	Terminal Addiction, GUI-phobic. Says GUI is too cumbersome<br>	Loves rapping, infact made his own rap song. Coming soon on Vevo.<br>	Loves to code in C++, Java.</p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div><div class="about-us" id="about-us"><img src="nischay.jpg"></img><div class="content">	<p class="name">Nischay Pro</p>	<p class="desc">Pros: Code churner, library burner, fast learner.<br>	Cons: Addiction to shit. And MS-DOS. Same thig, basically.<br>	Little known fact: Keeps rats as pets.<br>	Loves to code in C#. Allergic to CSS.</p>	<p class="quote">This is SHITCODE!!</p></div></div><div class="about-us" id="about-us"><img src="abhilash.jpg"></img><div class="content">	<p class="name">Abhilash Verma</p>	<p class="desc">Design God!<br>	Can fuck you in CSS+JS professionally. Variable transitions and positions.<br>	The only guy who can code while others in room play CS.<br>	Loves to create stuff from scratch and does it beautifully. </p>	<p class="quote">Only with root can true pain (and thus enlightenment) be achieved.</p></div></div>';
     
-};
 // session management
 // session management

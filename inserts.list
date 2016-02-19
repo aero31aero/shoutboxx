@@ -1,0 +1,14 @@
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','English Language Activities Society');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','Design Club');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','Catharsis');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','Martial Arts');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','JC');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('clubs-all','bulls and bears');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('tech-assocs-all','physics assoc');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('other-orgs-all','ARC');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('depts-all','sponsorship');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('depts-all','marketing');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('depts-all','firewallz');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('depts-all','Photography');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('depts-all','informalz');
+INSERT INTO grouptags ( maintag,subtag) VALUES ('social-orgs-all','SCIO');
