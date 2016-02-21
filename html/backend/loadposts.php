@@ -41,7 +41,7 @@ if( $num_row >=1 ) {
    
     
 }
-$sql = "SELECT postid,mid,creator,message,created_time+ interval 30 minute + interval 5 hour as created_time,fullimage FROM posts WHERE (";
+$sql = "SELECT postid,mid,creator,message,created_time+ interval 30 minute + interval 5 hour as created_time,fullimage,groupname FROM posts,groups WHERE (";
 $arrlength = count($tagarray);
 for($x = 0; $x < $arrlength-1; $x++) {
     //exception-handling-for-tags
@@ -88,13 +88,28 @@ for($x = 0; $x < $arrlength-1; $x++) {
         $sql= $sql . "message LIKE '%' OR ";
         $limit=100;
     }
-$sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%' OR creator LIKE '%". $tagarray[$arrlength-1] . "%') AND  ";
-$sql= $sql . "ismessage=TRUE ORDER BY created_time DESC ";
+$sql= $sql . "message LIKE '%". $tagarray[$arrlength-1] . "%' OR creator LIKE '%". $tagarray[$arrlength-1] . "%') AND ";
+
+
+$sql5 = "SELECT * FROM usergroups WHERE userid='$userid' AND isactive=1;";
+$result5 =$conn->query($sql5);
+$num_row5 = mysqli_num_rows($result5);
+if( $num_row5 >=1 ){
+    $sql = $sql . "(";
+    while($post_row5 = mysqli_fetch_array($result5)) {
+        $sql = $sql . "groups.groupid=" . $post_row5['groupid'] . " OR ";
+    }
+    $sql=substr($sql, 0, -4);
+    $sql = $sql . ") AND ";
+}
+if( $num_row5 ==0 ){
+    $sql = $sql . " userid=0 AND ";
+}
+$sql= $sql . "groups.groupid=posts.groupid AND ismessage=TRUE ORDER BY created_time DESC ";
 if($userid!=0){
     $sql = $sql . "LIMIT " . $limit . ";";
 }
         //echo $sql;
-       // echo "$sql";
         $result1 =$conn->query($sql);
 
         $num_row=0;
@@ -105,7 +120,7 @@ if($userid!=0){
 
             while($post_row = mysqli_fetch_array($result1)) {                
                 $getpostid = explode("_",$post_row['mid']);
-                $output=$output. "<li class='post' postid=" . $post_row['postid'] . "><div class='tooltip options'><span onclick=\"window.open('https://www.facebook.com/groups/" . $getpostid[0] . "/permalink/". $getpostid[1] . "','_blank'); return false;\" title='Open in Facebook'><i class='material-icons'>reply_all</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
+                $output=$output. "<li class='post' postid=" . $post_row['postid'] . " created_time='" . $post_row['created_time'] . "'><div class='tooltip options'><span onclick=\"window.open('https://www.facebook.com/groups/" . $getpostid[0] . "/permalink/". $getpostid[1] . "','_blank'); return false;\" title='Open in Facebook'><i class='material-icons'>reply_all</i></span></div><div class='postcontent'><span class='details'><span class='author'>" . $post_row['creator'] . "</span><span class='date'>" . $post_row['created_time'] . "</span><span class='group'>" . $post_row['groupname'] . "</span></span><div class='message'>" . $post_row['message'] . "</div>";
                 if($post_row['fullimage']!=NULL){
                    /*  
    <img src="thumbnails.jpg" />
@@ -179,9 +194,6 @@ for($x = 0; $x < $arrlength-1; $x++) {
         $sql= $sql . "message LIKE '%dramatics club%' OR ";
     }-->*/
 
-    f
 
 
 ?>
-
-

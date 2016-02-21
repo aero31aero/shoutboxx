@@ -38,7 +38,68 @@ function loadtaggroups(){
         };
 }
 
-
+function loadgroups(){
+    var request= getRequest();
+    
+    var params="backend/getgroups.php?userid="+curuserid;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("grouplist").innerHTML=request.responseText;
+                    groupTagHolder=request.responseText;
+                    //console.log(request.responseText);
+                    //refreshTags();
+                    //appendChild(request.responseText);                                      
+                }
+            }
+        };
+}
+function savegrouptoggle(isactive,groupid){
+    var request= getRequest();
+    
+    var params="backend/togglegroups.php?userid="+curuserid + "&groupid=" + groupid + "&isactive=" + isactive;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText!="fail"){
+                    document.getElementById("grouplist").innerHTML=request.responseText;
+                    groupTagHolder=request.responseText;
+                    loadgroups();
+                    loadposts();
+                    //console.log(request.responseText);
+                    //refreshTags();
+                    //appendChild(request.responseText);
+                                        
+                }
+            }
+        };
+}
+$('#search_wrapper').on('click','.listtoggle',function(){
+    $(this).toggleClass('active');
+    if($(this).hasClass('active')) {
+        $(this).children(".checkbox").html('check');
+    var groupid = $(this).attr("groupid");
+    savegrouptoggle('1',groupid);
+    }
+    else{
+        $(this).children(".checkbox").html('');
+        var groupid = $(this).attr("groupid");
+        savegrouptoggle('0',groupid);
+    }
+});
+$('.togglegroups').click(function(){
+    loadgroups();
+    $(this).parent().toggleClass('active');
+});
 function loadToasterOptions(){
 
     toastr.options = {
@@ -248,6 +309,7 @@ function login(){
                     loadtags();
                     bringmain();   
                     loadposts();
+                    loadgroups();
                     loadtaggroups();
                     toastr.success('You have been logged in as ' + username + '.', 'Authentication Successful');    
                     
@@ -779,3 +841,23 @@ function openfaq(){
     
 // session management
 // session management
+t=0;
+window.setInterval(function(){
+    console.log(t++); 
+    var lastpostime = document.getElementById('post_wrapper').firstElementChild.getAttribute('created_time');
+    var request= getRequest();    
+    var params="backend/checknewposts.php?userid="+curuserid+"&lastposttime="+lastpostime;
+    request.open("GET",params,true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-length",params.length);
+    request.setRequestHeader("Connection","close");
+    request.send();   
+    request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {                
+                if(request.responseText="success"){
+                   //alert("Logged out");
+                    console.log("There are new posts.");
+                }
+            }
+    }    
+},5000)

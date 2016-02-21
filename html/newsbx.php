@@ -73,9 +73,12 @@
   <!-- popup -->
   
   <div id='search_wrapper'>
-      <div id="usernamebar">Hello World</div>
-      <div id="appnamebar">The BPHC Wall</div>
-    <div id="usernamebar" class="toggle material-icons" onclick="openfaq();">help_outline</div>
+      <div class="right" id='usernamebar'></div>
+      <div class="appnamebar" id='groupList'><div class="togglegroups"><span>The BPHC Wall</span><span  class="material-icons" id='groups_dropDown_arrow'>keyboard_arrow_down</span></div>
+        <div class='list' id="grouplist">  
+        </div>
+      </div>
+      <div class="toggle tooltip right material-icons" onclick="openfaq();" title="Help and FAQ">help_outline</div>      
       <input id='searchbar' placeholder="Search All Posts"/>
       
       
@@ -89,10 +92,11 @@
   </div>
   </div>
   </div>
+    <div class="button material-icons tooltip" id="goToTop" title="Go To Top" onclick="document.getElementById('scrollable').scrollTop=0">publish</div>
     <div id='button_drawer'>
         <div class="button tooltip b-about-us material-icons" title="About Us" onclick="onbragclick()" >contacts</div> 
         <div class="button tooltip b-feedback inactive material-icons" id='open_composer' title="Give Feedback">feedback</div> 
-        <div class="button tooltip b-settings material-icons" title="Common Tags" onclick="onsettingsclick()">settings</div> 
+        <div class="button tooltip b-settings material-icons" title="Common Tags" onclick="onsettingsclick()">label_outline</div> 
         <div class="button tooltip b-all-posts material-icons rotated" onclick="loadallposts()" title="Show All Posts">last_page</div> 
         <div class="button tooltip b-logout material-icons" onclick="logout()" title="Logout">power_settings_new</div>
     </div>
@@ -149,7 +153,9 @@
                     bringmain(); 
                     updateSize();
                     loadposts();
+                    loadgroups();
                     loadtaggroups();
+                    
                     //toastr.success('Welcome back ' + username + '.', 'Authentication Successful');  
             // code to log out
             

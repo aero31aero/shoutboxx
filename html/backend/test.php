@@ -10,7 +10,7 @@ try {
     $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
     //echo "Connected to $dbname at $dbhost successfully.";
 } catch (Exception $pe) {
-    //die("Could not connect to the database $dbname :" . $pe->getMessage());
+    die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
 
 
@@ -29,81 +29,103 @@ function fetchUrl($url) {
 }
 
 
+$sql1 = "SELECT * FROM groups WHERE isactive='1';";
+$result1 =$conn->query($sql1);
+while($groupshit = mysqli_fetch_array($result1)){
+    $adminid = $groupshit['adminid'];
+    $sql2 = "SELECT * FROM tokens WHERE adminid='$adminid';";
+    $result2 =$conn->query($sql2);
+    //echo $groupshit['fbid'];
+   // echo "<br>";
+    //echo $groupshit['groupid'];
+    //echo "<br>";
+    
+    $thetoken = mysqli_fetch_array($result2)['token'];
+    //echo $thetoken;
+    $url = "https://graph.facebook.com/" . $groupshit['fbid'] . "/feed/?access_token=" . $thetoken . "&fields=id,from,created_time,message,message_tags,type,story,status_type,full_picture";
+    //echo $url . '</br>';
+    $numberofpages = 3;
+    $numberofpagesdone = 0;
+    while($numberofpagesdone != $numberofpages){
+        $json = fetchUrl($url);
+        $json_a = json_decode($json,TRUE);
+        foreach($json_a['data'] as $shit)
+        {
+            if(array_key_exists('message', $shit) || array_key_exists('story',$shit)) {
+                if(array_key_exists('message', $shit)){
+                    $shit['message']=str_replace("\n" , "<br>" , $shit['message'] );
+                    $messageshit = mysql_escape_string($shit['message']);
+                    $ismessage = true;
+                }
+                else if(array_key_exists('story', $shit)){
+                    $messageshit = mysql_escape_string($shit['story']);
+                    $ismessage = false;
+                }
+                $midshit = $shit['id'];
+                $typeshit = $shit['type'];
+                $createdtime = $shit['created_time'];
+                try{
+                    $fullimage = $shit['full_picture'];
+                }
+                catch(Exception $pe){
+                    $fullimage = '';
+                    echo "<br>NOIMAGE";
+                }
+                echo $fullimage;
+                echo "<br>";
+                //$fullimage=$fullimage . "";
+                $creatorname='';
+                $creatorid='';
+                    $creatorname = $shit['from']['name'];
+                    $creatorid = $shit['from']['id'];
+                    //echo "\n SOMETHING SHIT WILL FOLLOW: " . $creatorname . $creatorid . "\n\n\n";
 
-$url = "https://graph.facebook.com/$groupid/feed/?access_token=$accesstoken&fields=id,from,created_time,message,message_tags,type,story,status_type,full_picture";
-//echo $url . '</br>';
-$numberofpages = 3;
-$numberofpagesdone = 0;
-while($numberofpagesdone != $numberofpages){
-    $json = fetchUrl($url);
-    $json_a = json_decode($json,TRUE);
-    foreach($json_a['data'] as $shit)
-    {
-        if(array_key_exists('message', $shit) || array_key_exists('story',$shit)) {
-            if(array_key_exists('message', $shit)){
-                $shit['message']=str_replace("\n" , "<br>" , $shit['message'] );
-                $messageshit = mysql_escape_string($shit['message']);
-                $ismessage = true;
-            }
-            else if(array_key_exists('story', $shit)){
-                $messageshit = mysql_escape_string($shit['story']);
-                $ismessage = false;
-            }
-            $midshit = $shit['id'];
-            $typeshit = $shit['type'];
-            $createdtime = $shit['created_time'];
-            $fullimage = $shit['full_picture'];
-            $creatorname='';
-            $creatorid='';
-                $creatorname = $shit['from']['name'];
-                $creatorid = $shit['from']['id'];
-                //echo "\n SOMETHING SHIT WILL FOLLOW: " . $creatorname . $creatorid . "\n\n\n";
+               // echo "Her 5";
 
-           // echo "Her 5";
-
-    $sql = "SELECT * FROM posts WHERE mid='$midshit';";
-    $result =$conn->query($sql);
-    $num_row = mysqli_num_rows($result);
-    if( $num_row >=1 ) { 
-
-    }
-    else{
-            $sql = "INSERT INTO posts (message, mid,created_time,creator,creatorid,typeofpost,ismessage,fullimage)
-            VALUES ('$messageshit', '$midshit', '$createdtime' ,'$creatorname','$creatorid','$typeshit','$ismessage','$fullimage')";
-
-            if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully for post created by " . $creatorname . ".<br>";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-            //echo $shit['message']." name is ".$shit['id'];
-
-
-            //echo "Her 6";
-            $i = 0;
-            foreach($json_a['paging'] as $shit2)
-            {
-                if($i == 1) {
-
-                $url = $shit2;
-
-
+                $sql = "SELECT * FROM posts WHERE mid='$midshit';";
+                $result =$conn->query($sql);
+                $num_row = mysqli_num_rows($result);
+                if( $num_row >=1 ) { 
+                    
                 }
                 else{
-                    $i+=1;
+                        $sql = "INSERT INTO posts (message, mid,created_time,creator,creatorid,typeofpost,ismessage,fullimage,groupid)
+                        VALUES ('$messageshit', '$midshit', '$createdtime' ,'$creatorname','$creatorid','$typeshit','$ismessage','$fullimage'," . $groupshit['groupid'] . " );";
+                        echo "<br>" . $sql . "<br>";
+                        if ($conn->query($sql) === TRUE) {
+                            echo "New record created successfully for post created by " . $creatorname . ".<br>";
+                        } else {
+                            echo "Error: " . $sql . "<br>" . $conn->error;
+                        }
+                        //echo $shit['message']." name is ".$shit['id'];
+
+
+                        //echo "Her 6";
+                        $i = 0;
+                        foreach($json_a['paging'] as $shit2)
+                        {
+                            if($i == 1) {
+
+                            $url = $shit2;
+
+
+                            }
+                            else{
+                                $i+=1;
+                            }
+                        }
+                                #$url = $shit2['next'];
+                                #echo $url;
+                    }
                 }
-            }
-                    #$url = $shit2['next'];
-                    #echo $url;
-        }
-        }
-        else{
+                else{
 
-            #$conn->close();
+                    #$conn->close();
 
+                }
         }
+        $numberofpagesdone+=1;
     }
-    $numberofpagesdone+=1;
 }
 $conn-->close();
 ?>

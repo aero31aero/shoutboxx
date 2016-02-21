@@ -52,6 +52,8 @@ else{
             $conn->query($sql);
             $sql = "INSERT INTO tags (userid,tag,isactive) VALUES ( $useridforlog , 'induction', 1 );";
             $conn->query($sql);
+            $sql = "INSERT INTO usergroups (userid,groupid,isactive) VALUES ( $useridforlog , 1, 1 );";
+            $conn->query($sql);
             
         }
         else{
